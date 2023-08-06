@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--TODO: favicons, leave page warning
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="img/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="img/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="img/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="mask-icon"
+      href="img/favicon/safari-pinned-tab.svg"
+      color="#9c1e14"
+    />
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#9c1e14" />
+    <meta name="msapplication-config" content="img/favicon/browserconfig.xml" />-->
+    <title>Freibadampel</title>
+    <link rel="stylesheet" href="index.css?v=13" />
+  </head>
+
+  <body style="margin: 0px">
+    <div
+      style="
+        position: fixed;
+        top: 0px;
+        width: 100%;
+        height: 115px;
+        background-color: black;
+        margin: 0px;
+      "
+    >
+      <h1
+        style="
+          padding-bottom: 0px;
+          margin-bottom: 2px;
+          color: white;
+          margin-left: 5px;
+        "
+      >
+        FREIBADAMPEL
+      </h1>
+      <div
+        style="
+          overflow-y: hidden;
+          overflow-x: auto;
+          width: calc(100% - 22px);
+          white-space: nowrap;
+          background-color: rgba(0, 0, 0, 1);
+          padding-top: 12px;
+          padding-left: 4px;
+          padding-right: 4px;
+          border-radius: 4px;
+        "
+      >
+        <button id="menu-preview" class="button-primary">Vorschau</button>
+        <button id="menu-temperature" class="button">Temperatur</button>
+        <button id="menu-hours" class="button">Zeiten</button>
+        <button id="menu-std-hours" class="button">Standardzeiten</button>
+        <button id="menu-pools" class="button">Bad</button>
+      </div>
+    </div>
+
+    <!--<div class="container">-->
+    <div style="margin-top: 120px; padding-left: 4px; padding-right: 4px">
+      <!-- ========== PREVIEW ========== -->
+      <div id="div-preview" style="display: block">
+        <h3>VORSCHAU</h3>
+        <div
+          id="div-preview"
+          style="
+            border-style: solid;
+            border-width: 3px;
+            border-radius: 5px;
+            padding: 8px;
+            text-align: start;
+          "
+        >
+          <!-- -->
+          <span style="font-size: 16pt">FREIBAD XYZ</span>
+          <br />
+          <i>Schwimmer: 20.1 °C, Nichtschwimmer: 19.5 °C</i>
+          <br />
+          <br />
+          <b>Heute: 08:00-09:00 und 10:00-20:00 Uhr</b><br />
+          <br />
+          <i>Voraussichtlich:</i><br />
+          Morgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
+          Übermorgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
+          <br />
+          <i
+            >Achtung: Zeiten können sich je nach Wetterlage jederzeit ändern.</i
+          >
+        </div>
+        <div style="text-align: center">
+          <button class="button-primary" style="margin-top: 4px; width: 100%">
+            publizieren
+          </button>
+        </div>
+        <br />
+        <h3>ÖFFENTLICH</h3>
+        <div
+          id="div-preview"
+          style="
+            border-style: solid;
+            border-width: 3px;
+            border-radius: 5px;
+            padding: 8px;
+            text-align: start;
+          "
+        >
+          <!-- -->
+          <span style="font-size: 16pt">FREIBAD XYZ</span>
+          <br />
+          <i>Schwimmer: 20.1 °C, Nichtschwimmer: 19.5 °C</i>
+          <br />
+          <br />
+          <b>Heute: 08:00-09:00 und 10:00-20:00 Uhr</b><br />
+          <br />
+          <i>Voraussichtlich:</i><br />
+          Morgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
+          Übermorgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
+          <br />
+          <i
+            >Achtung: Zeiten können sich je nach Wetterlage jederzeit ändern.</i
+          >
+        </div>
+      </div>
+
+      <!-- ========== TEMPERATURE ========== -->
+
+      <div
+        id="div-temperature"
+        style="
+          display: none;
+          border-style: solid;
+          border-width: 3px;
+          border-radius: 5px;
+          padding: 8px;
+          text-align: start;
+        "
+      >
+        <b style="font-size: large">SCHWIMMER / °C</b><br />
+
+        <div style="text-align: center; font-size: x-large">20,1 °C</div>
+
+        <!--<div style="padding-top: 4px">Name:</div>
+        <input class="u-full-width" type="text" placeholder="Schwimmer" />-->
+        <div style="padding-top: 4px">Vorkommastelle:</div>
+
+        <div
+          id="water-temperature-test"
+          style="
+            overflow-y: hidden;
+            overflow-x: auto;
+            width: calc(100% - 22px);
+            white-space: nowrap;
+          "
+        ></div>
+
+        <div style="padding-top: 4px">Nachkommastelle:</div>
+
+        <div
+          id="water-temperature-test-2"
+          style="
+            overflow-y: hidden;
+            overflow-x: auto;
+            width: calc(100% - 22px);
+            white-space: nowrap;
+          "
+        ></div>
+
+        <br />
+        <input type="checkbox" checked /> Wassertemperatur anzeigen
+
+        <!--<br />
+        <button class="button-primary">Änderungen speichern</button>-->
+      </div>
+
+      <!-- ========== HOURS ========== -->
+
+      <div id="div-hours" style="display: none">
+        <div
+          style="
+            border-style: solid;
+            border-width: 3px;
+            border-radius: 5px;
+            padding: 8px;
+            text-align: start;
+          "
+        >
+          <div
+            style="
+              font-size: x-large;
+              padding-left: 6px;
+              background-color: black;
+              color: white;
+              margin-bottom: 8px;
+              border-radius: 5px;
+              text-align: center;
+              padding: 8px;
+            "
+          >
+            Heute,<br />
+            Samstag, 05.08.2023
+          </div>
+          <button class="button-primary" style="width: 100%">
+            Setze Standardzeiten</button
+          ><br />
+          <div
+            style="
+              border-style: solid;
+              border-width: 2px;
+              border-radius: 5px;
+              border-color: black;
+              padding: 8px;
+              /*margin-left: 16px;*/
+              background-color: #000000;
+              color: white;
+            "
+          >
+            <!--<b style="font-size: large; color: #aa322c">ZEITSLOT &nbsp; 1</b
+            ><br />-->
+
+            <div style="text-align: center; font-size: x-large">
+              08:00 bis 16:00 Uhr
+            </div>
+
+            <div style="padding-top: 4px">Beginn:</div>
+
+            <div
+              id="time-test"
+              style="
+                overflow-y: hidden;
+                overflow-x: auto;
+                width: calc(100% - 0px);
+                white-space: nowrap;
+              "
+            ></div>
+
+            <div style="padding-top: 4px">Ende:</div>
+
+            <div
+              id="time-test-2"
+              style="
+                overflow-y: hidden;
+                overflow-x: auto;
+                width: calc(100% - 0px);
+                white-space: nowrap;
+              "
+            ></div>
+
+            <div style="margin-top: 15px">
+              <input type="checkbox" /> genaue Endzeit aktuell noch unklar<br />
+              <input type="checkbox" /> Endzeit nach hinten offen<br />
+            </div>
+
+            <button class="button-primary" style="margin-top: 8px; width: 100%">
+              diesen Zeitslot löschen
+            </button>
+          </div>
+          <br />
+          <button class="button-primary" style="width: 100%">
+            weiteren Zeitslot hinzufügen
+          </button>
+          <br />
+        </div>
+
+        So, 06.08.2023 (Morgen)<br />
+        Mo, 07.08.2023 (Übermorgen)<br />
+        Di, 08.08.2023<br />
+        Mi, 09.08.2023<br />
+      </div>
+
+      <!-- ========== STANDARD HOURS ========== -->
+
+      <div id="div-std-hours" style="display: none">
+        Montags<br />
+        Dienstags<br />
+        Mittwochs<br />
+        Donnerstags<br />
+        Freitags<br />
+        Samstags<br />
+        Sonntags<br />
+      </div>
+
+      <!-- ========== POOLS ========== -->
+      <div id="div-pools" style="display: none">
+        <div
+          id="div-preview"
+          style="
+            border-style: solid;
+            border-width: 3px;
+            border-radius: 5px;
+            padding: 8px;
+            text-align: start;
+          "
+        >
+          <h2>Badname</h2>
+          Freibad XYZ
+        </div>
+
+        <br />
+
+        <div id="div-pools">
+          <div
+            id="div-preview"
+            style="
+              border-style: solid;
+              border-width: 3px;
+              border-radius: 5px;
+              padding: 8px;
+              text-align: start;
+            "
+          >
+            <h2>Becken</h2>
+            <table style="width: 100%">
+              <tr>
+                <th>Name</th>
+                <th>Länge in Metern</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>Schwimmer</td>
+                <td>33</td>
+                <td><button class="button-primary">löschen</button></td>
+              </tr>
+              <tr>
+                <td>Nichtschwimmer</td>
+                <td>20</td>
+                <td><button class="button-primary">löschen</button></td>
+              </tr>
+            </table>
+            <button class="button-primary" style="width: 100%">
+              Weiteres Becken hinzufügen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== XXXX TODO XXXXX ========== -->
+
+      <!--<br /><br />
+      <h2>Zusatzinfos</h2>
+
+      Achtung: Zeiten können sich jederzeit ändern.-->
+
+      <!-- ========== FOOTER ========== -->
+
+      <br />
+      <div style="text-align: center">
+        2023 by Andreas Schwenk, Lizenz: GPLv3
+      </div>
+    </div>
+
+    <script>
+      let menuItemIDs = [
+        "preview",
+        "temperature",
+        "hours",
+        "std-hours",
+        "pools",
+      ];
+      let menuElements = [];
+      let divElements = [];
+      for (let id of menuItemIDs) {
+        let menuElement = document.getElementById("menu-" + id);
+        menuElements.push(menuElement);
+        let divElement = document.getElementById("div-" + id);
+        divElements.push(divElement);
+        menuElement.addEventListener("click", () => {
+          for (let i = 0; i < menuElements.length; i++) {
+            let u = menuElements[i];
+            u.classList.value = "";
+            u.classList.add(menuElement == u ? "button-primary" : "button");
+            let v = divElements[i];
+            v.style.display = menuElement == u ? "block" : "none";
+          }
+          window.scrollTo(0, 0);
+        });
+      }
+
+      function generateNumberButtons(parent, start, end, active = -1) {
+        parent.innerHTML = "";
+        let activeElement = null;
+        let elements = [];
+        for (let i = start; i <= end; i++) {
+          let element = document.createElement("span");
+          elements.push(element);
+          element.innerHTML = "" + i;
+          element.classList.add(i == active ? "checkedBox" : "uncheckedBox");
+          parent.appendChild(element);
+        }
+        for (let i = 0; i < elements.length; i++) {
+          let element = elements[i];
+          element.addEventListener("click", () => {
+            for (let j = 0; j < elements.length; j++) {
+              let element2 = elements[j];
+              element2.classList.value = "";
+              if (i == j) {
+                element2.classList.add("checkedBox");
+              } else {
+                element2.classList.add("uncheckedBox");
+              }
+            }
+          });
+        }
+        if (activeElement != null) activeElement.scrollIntoView();
+      }
+
+      function generateTimeButtons(parent, start, end, active = -1) {
+        // time = 4*hour + quarter
+        parent.innerHTML = "";
+        let activeElement = null;
+        let elements = [];
+        for (let i = start; i <= end; i++) {
+          let hour = "" + Math.floor(i / 4);
+          let minute = "" + Math.floor(i % 4) * 15;
+          if (minute.length == 1) minute = "0" + minute;
+          let element = document.createElement("span");
+          elements.push(element);
+          element.style.marginRight = "4px";
+          element.innerHTML = "" + hour + ":" + minute;
+          element.classList.add(i == active ? "checkedBox" : "uncheckedBox");
+          parent.appendChild(element);
+          if (i == active) activeElement = element;
+        }
+        for (let i = 0; i < elements.length; i++) {
+          let element = elements[i];
+          element.addEventListener("click", () => {
+            for (let j = 0; j < elements.length; j++) {
+              let element2 = elements[j];
+              element2.classList.value = "";
+              if (i == j) {
+                element2.classList.add("checkedBox");
+              } else {
+                element2.classList.add("uncheckedBox");
+              }
+            }
+          });
+        }
+        if (activeElement != null) activeElement.scrollIntoView();
+      }
+
+      generateNumberButtons(
+        document.getElementById("water-temperature-test"),
+        10,
+        35,
+        20
+      );
+
+      generateNumberButtons(
+        document.getElementById("water-temperature-test-2"),
+        0,
+        9,
+        1
+      );
+
+      generateTimeButtons(
+        document.getElementById("time-test"),
+        5 * 4,
+        22 * 4,
+        8 * 4
+      );
+      generateTimeButtons(
+        document.getElementById("time-test-2"),
+        5 * 4,
+        22 * 4,
+        16 * 4
+      );
+
+      var isDirty = function () {
+        return true;
+      };
+      window.onload = function () {
+        window.addEventListener("beforeunload", function (e) {
+          if (!isDirty()) {
+            return undefined;
+          }
+          var confirmationMessage =
+            "It looks like you have been editing something. " +
+            "If you leave before saving, your changes will be lost.";
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+        });
+      };
+    </script>
+  </body>
+</html>

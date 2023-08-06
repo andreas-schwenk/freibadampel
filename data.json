@@ -1,0 +1,38 @@
+{
+    "pools": [
+        {
+            "id": "Schwimmer",
+            "length": 33
+        },
+        {
+            "id": "Nichtschwimmer",
+            "length": 20
+        }
+    ],
+    "temp0a": 20,
+    "temp0b": 0,
+    "std-hours": {
+        "mondays": [
+            {
+                "from": 0,
+                "to": 1
+            },
+            {
+                "from": 2,
+                "to": 5
+            }
+        ]
+    },
+    "hours": {
+        "2023-08-06": [
+            {
+                "from": 0,
+                "to": 1
+            },
+            {
+                "from": 2,
+                "to": 5
+            }
+        ]
+    }
+}
