@@ -1,5 +1,20 @@
 /* adjustments made for "freibadampel" (TODO: colors) */
 
+.panel {
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 5px;
+  padding: 8px;
+  text-align: start;
+}
+
+.sliderContainer {
+  overflow-y: hidden;
+  overflow-x: auto;
+  width: calc(100% - 22px);
+  white-space: nowrap;
+}
+
 .uncheckedBox {
   background-color: #ffffff;
   border-radius: 5px;

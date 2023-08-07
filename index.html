@@ -31,7 +31,8 @@
     <meta name="msapplication-TileColor" content="#9c1e14" />
     <meta name="msapplication-config" content="img/favicon/browserconfig.xml" />-->
     <title>Freibadampel</title>
-    <link rel="stylesheet" href="index.css?v=13" />
+    <link rel="stylesheet" href="index.css?v=14" />
+    <script src="https://cdn.jsdelivr.net/npm/context-filter-polyfill/dist/index.min.js"></script>
   </head>
 
   <body style="margin: 0px">
@@ -68,6 +69,7 @@
           border-radius: 4px;
         "
       >
+        <!-- TODO: generate by JS -->
         <button id="menu-preview" class="button-primary">Vorschau</button>
         <button id="menu-temperature" class="button">Temperatur</button>
         <button id="menu-hours" class="button">Zeiten</button>
@@ -76,54 +78,41 @@
       </div>
     </div>
 
-    <!--<div class="container">-->
     <div style="margin-top: 120px; padding-left: 4px; padding-right: 4px">
       <!-- ========== PREVIEW ========== -->
       <div id="div-preview" style="display: block">
-        <h3>VORSCHAU</h3>
-        <div
-          id="div-preview"
+        <img
+          id="my-img"
+          src="img512.jpg"
           style="
-            border-style: solid;
-            border-width: 3px;
-            border-radius: 5px;
-            padding: 8px;
-            text-align: start;
+            width: 100%;
+            max-width: 512px;
+            display: block;
+            display: none;
+            /*-webkit-filter: brightness(35%);*/
           "
-        >
-          <!-- -->
-          <span style="font-size: 16pt">FREIBAD XYZ</span>
-          <br />
-          <i>Schwimmer: 20.1 °C, Nichtschwimmer: 19.5 °C</i>
-          <br />
-          <br />
-          <b>Heute: 08:00-09:00 und 10:00-20:00 Uhr</b><br />
-          <br />
-          <i>Voraussichtlich:</i><br />
-          Morgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
-          Übermorgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
-          <br />
-          <i
-            >Achtung: Zeiten können sich je nach Wetterlage jederzeit ändern.</i
-          >
-        </div>
+        />
+
+        <h3>VORSCHAU</h3>
+        <canvas
+          id="preview-canvas"
+          width="512"
+          height="512"
+          style="width: 100%; max-width: 512px"
+        ></canvas>
+
         <div style="text-align: center">
-          <button class="button-primary" style="margin-top: 4px; width: 100%">
+          <button
+            id="publish"
+            class="button-primary"
+            style="margin-top: 4px; width: 100%"
+          >
             publizieren
           </button>
         </div>
         <br />
         <h3>ÖFFENTLICH</h3>
-        <div
-          id="div-preview"
-          style="
-            border-style: solid;
-            border-width: 3px;
-            border-radius: 5px;
-            padding: 8px;
-            text-align: start;
-          "
-        >
+        <div id="div-preview" class="panel">
           <!-- -->
           <span style="font-size: 16pt">FREIBAD XYZ</span>
           <br />
@@ -143,67 +132,23 @@
       </div>
 
       <!-- ========== TEMPERATURE ========== -->
-
-      <div
-        id="div-temperature"
-        style="
-          display: none;
-          border-style: solid;
-          border-width: 3px;
-          border-radius: 5px;
-          padding: 8px;
-          text-align: start;
-        "
-      >
-        <b style="font-size: large">SCHWIMMER / °C</b><br />
-
-        <div style="text-align: center; font-size: x-large">20,1 °C</div>
-
-        <!--<div style="padding-top: 4px">Name:</div>
-        <input class="u-full-width" type="text" placeholder="Schwimmer" />-->
-        <div style="padding-top: 4px">Vorkommastelle:</div>
-
-        <div
-          id="water-temperature-test"
-          style="
-            overflow-y: hidden;
-            overflow-x: auto;
-            width: calc(100% - 22px);
-            white-space: nowrap;
-          "
-        ></div>
-
-        <div style="padding-top: 4px">Nachkommastelle:</div>
-
-        <div
-          id="water-temperature-test-2"
-          style="
-            overflow-y: hidden;
-            overflow-x: auto;
-            width: calc(100% - 22px);
-            white-space: nowrap;
-          "
-        ></div>
-
-        <br />
-        <input type="checkbox" checked /> Wassertemperatur anzeigen
-
-        <!--<br />
-        <button class="button-primary">Änderungen speichern</button>-->
+      <div id="div-temperature" style="display: none">
+        <div id="div-temperature" class="panel">
+          <b style="font-size: large">SCHWIMMER / °C</b><br />
+          <div style="text-align: center; font-size: x-large">20,1 °C</div>
+          <div style="padding-top: 4px">Vorkommastelle:</div>
+          <div id="water-temperature-test" class="sliderContainer"></div>
+          <div style="padding-top: 4px">Nachkommastelle:</div>
+          <div id="water-temperature-test-2" class="sliderContainer"></div>
+          <br />
+          <input type="checkbox" checked /> Wassertemperatur anzeigen
+        </div>
       </div>
 
       <!-- ========== HOURS ========== -->
 
       <div id="div-hours" style="display: none">
-        <div
-          style="
-            border-style: solid;
-            border-width: 3px;
-            border-radius: 5px;
-            padding: 8px;
-            text-align: start;
-          "
-        >
+        <div class="panel">
           <div
             style="
               font-size: x-large;
@@ -229,7 +174,6 @@
               border-radius: 5px;
               border-color: black;
               padding: 8px;
-              /*margin-left: 16px;*/
               background-color: #000000;
               color: white;
             "
@@ -301,16 +245,7 @@
 
       <!-- ========== POOLS ========== -->
       <div id="div-pools" style="display: none">
-        <div
-          id="div-preview"
-          style="
-            border-style: solid;
-            border-width: 3px;
-            border-radius: 5px;
-            padding: 8px;
-            text-align: start;
-          "
-        >
+        <div id="div-preview" class="panel">
           <h2>Badname</h2>
           Freibad XYZ
         </div>
@@ -318,31 +253,28 @@
         <br />
 
         <div id="div-pools">
-          <div
-            id="div-preview"
-            style="
-              border-style: solid;
-              border-width: 3px;
-              border-radius: 5px;
-              padding: 8px;
-              text-align: start;
-            "
-          >
+          <div id="div-preview" class="panel">
             <h2>Becken</h2>
             <table style="width: 100%">
               <tr>
                 <th>Name</th>
-                <th>Länge in Metern</th>
+                <th>Länge / m</th>
+                <th>Breite / m</th>
+                <th>Tiefe / m</th>
                 <th></th>
               </tr>
               <tr>
                 <td>Schwimmer</td>
                 <td>33</td>
+                <td>20</td>
+                <td>2,35</td>
                 <td><button class="button-primary">löschen</button></td>
               </tr>
               <tr>
                 <td>Nichtschwimmer</td>
                 <td>20</td>
+                <td>10</td>
+                <td>schief</td>
                 <td><button class="button-primary">löschen</button></td>
               </tr>
             </table>
@@ -369,6 +301,24 @@
     </div>
 
     <script>
+      function publish() {
+        let img = document
+          .getElementById("preview-canvas")
+          .toDataURL("image/jpeg", 0.5);
+        console.log(img);
+        fetch("save.php", {
+          method: "POST",
+          cache: "no-cache",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ "img-data": img }),
+          //body: "just a test",
+        });
+      }
+      document.getElementById("publish").addEventListener("click", () => {
+        publish();
+      });
+
+      // ----- menu -----
       let menuItemIDs = [
         "preview",
         "temperature",
@@ -391,11 +341,203 @@
             let v = divElements[i];
             v.style.display = menuElement == u ? "block" : "none";
           }
+          if (id == "temperature") showTemperature();
           window.scrollTo(0, 0);
         });
       }
 
-      function generateNumberButtons(parent, start, end, active = -1) {
+      // ----- load data -----
+      let data = {};
+      // TODO: check for errors
+      fetch("data.json")
+        .then((response) => response.json())
+        .then((d) => {
+          data = d;
+          console.log(d);
+        });
+
+      // ----- temperature -----
+      function showTemperature() {
+        let parent = document.getElementById("div-temperature");
+        parent.innerHTML = "";
+        for (let i = 0; i < data["pools"].length; i++) {
+          let dataPool = data["pools"][i];
+          let panel = document.createElement("div");
+          parent.appendChild(panel);
+          panel.classList.add("panel");
+          // title
+          let title = document.createElement("b");
+          title.innerHTML = dataPool["id"] + " / °C";
+          title.style.fontSize = "large";
+          panel.appendChild(title);
+          // line break
+          panel.appendChild(document.createElement("br"));
+          // current temperature
+          let currentTemp = document.createElement("div");
+          panel.appendChild(currentTemp);
+          currentTemp.style.textAlign = "center";
+          currentTemp.style.fontSize = "x-large";
+          currentTemp.innerHTML =
+            "" + dataPool["temp"][0] + "," + dataPool["temp"][1];
+          // pre decimal place selection
+          let preDecimalPlace = document.createElement("div");
+          panel.appendChild(preDecimalPlace);
+          preDecimalPlace.paddingTop = "4px";
+          preDecimalPlace.innerHTML = "Vorkommastelle";
+          let preDecimalPlaceSlider = document.createElement("div");
+          panel.appendChild(preDecimalPlaceSlider);
+          preDecimalPlaceSlider.classList.add("sliderContainer");
+          let preDecimalPlaceSliderActiveElement = generateNumberButtons(
+            (value) => {
+              dataPool["temp"][0] = value;
+              currentTemp.innerHTML =
+                "" + dataPool["temp"][0] + "," + dataPool["temp"][1];
+            },
+            preDecimalPlaceSlider,
+            10,
+            35,
+            dataPool["temp"][0]
+          );
+          // decimal place selection
+          let decimalPlace = document.createElement("div");
+          panel.appendChild(decimalPlace);
+          decimalPlace.paddingTop = "4px";
+          decimalPlace.innerHTML = "Nachkommastelle";
+          let decimalPlaceSlider = document.createElement("div");
+          panel.appendChild(decimalPlaceSlider);
+          decimalPlaceSlider.classList.add("sliderContainer");
+          let decimalPlaceSliderActiveElement = generateNumberButtons(
+            (value) => {
+              dataPool["temp"][1] = value;
+              currentTemp.innerHTML =
+                "" + dataPool["temp"][0] + "," + dataPool["temp"][1];
+            },
+            decimalPlaceSlider,
+            0,
+            9,
+            dataPool["temp"][1]
+          );
+          // line break
+          panel.appendChild(document.createElement("br"));
+          // checkbox: show water temperature
+          let checkboxShow = document.createElement("input");
+          checkboxShow.type = "checkbox";
+          panel.appendChild(checkboxShow);
+          checkboxShow.checked = dataPool["showTemp"];
+          let checkboxShowText = document.createElement("span");
+          checkboxShowText.innerHTML = " " + "Wassertemperatur anzeigen";
+          panel.appendChild(checkboxShowText);
+          // spacing after panel
+          parent.appendChild(document.createElement("br"));
+          // scroll to active: TODO: DOES NOT WORK!!
+          if (preDecimalPlaceSliderActiveElement != null)
+            preDecimalPlaceSliderActiveElement.scrollIntoView();
+          if (decimalPlaceSliderActiveElement != null)
+            decimalPlaceSliderActiveElement.scrollIntoView();
+        }
+      }
+
+      // ----- render output -----
+      function renderText(
+        ctx,
+        ctxSize,
+        text,
+        y,
+        fontSize,
+        fontWeight = 600,
+        italic = false
+      ) {
+        ctx.filter = "blur(4px)";
+        ctx.fillStyle = "black";
+        let font = "";
+        if (italic) font += "italic ";
+        font += fontWeight + " " + fontSize + "px sans-serif";
+        ctx.font = font;
+        let m = ctx.measureText(text);
+        ctx.fillText(text, ctxSize / 2 - m.width / 2, y);
+        ctx.filter = "none";
+        ctx.fillStyle = "white";
+        ctx.font = font;
+        m = ctx.measureText(text);
+        ctx.fillText(text, ctxSize / 2 - m.width / 2, y);
+      }
+
+      function renderOutput(canvas) {
+        const ctxSize = 512;
+        var ctx = canvas.getContext("2d");
+        //ctx.globalAlpha = 0.45;
+
+        ctx.filter = "brightness(42%)";
+        ctx.drawImage(img, 0, 0);
+        ctx.filter = "brightness(100%)";
+        //ctx.globalAlpha = 1.0;
+        ctx.fillStyle = "white";
+
+        let fontSizeHoursLabel = 28;
+        let fontSizeHours = 30;
+        let fontSizeTemperature = 23;
+        let fontSizeInfo = 18;
+
+        let y = 75;
+        ctx.font = "lighter 48px sans-serif";
+        let title = "Freibad XYZ";
+        let m = ctx.measureText(title);
+        ctx.fillText(title, ctxSize / 2 - m.width / 2, y);
+
+        y += 25;
+
+        let text = "Schwimmer: 20.1 °C";
+        y += 40;
+        renderText(ctx, ctxSize, text, y, fontSizeTemperature, 300);
+        text = "Nichtschwimmer: 19.5 °C";
+        y += 30;
+        renderText(ctx, ctxSize, text, y, fontSizeTemperature, 300);
+
+        y += 30;
+
+        text = "Öffungszeiten heute:";
+        y += 40;
+        renderText(ctx, ctxSize, text, y, fontSizeHoursLabel, 300);
+        y += 40;
+        text = "08:00-09:00 und 10:00-20:00 Uhr";
+        renderText(ctx, ctxSize, text, y, fontSizeHours);
+
+        text = "Planung morgen:";
+        y += 40;
+        renderText(ctx, ctxSize, text, y, fontSizeHoursLabel, 300);
+        text = "08:00-09:00 und 10:00-20:00 Uhr";
+        y += 40;
+        renderText(ctx, ctxSize, text, y, fontSizeHours);
+
+        text = "Planung übermorgen:";
+        y += 40;
+        renderText(ctx, ctxSize, text, y, fontSizeHoursLabel, 300);
+        text = "08:00-09:00 und 10:00-20:00 Uhr";
+        y += 40;
+        renderText(ctx, ctxSize, text, y, fontSizeHours);
+
+        y += 50;
+        text = "Öffungszeiten können sich kurzfristig ändern!";
+        renderText(ctx, ctxSize, text, y, fontSizeInfo, 300, true);
+
+        /*ctx.filter = "blur(4px)";
+        ctx.fillStyle = "black";
+        ctx.font = "600 20px sans-serif";
+        title = "Heute: 08:00-09:00 und 10:00-20:00 Uhr";
+        m = ctx.measureText(title);
+        ctx.fillText(title, size / 2 - m.width / 2, 250);
+        ctx.filter = "blur(0px)";
+        ctx.fillStyle = "white";
+        ctx.fillText(title, size / 2 - m.width / 2, 250);*/
+      }
+
+      let img = document.getElementById("my-img");
+      img.addEventListener("load", (e) => {
+        renderOutput(document.getElementById("preview-canvas"));
+      });
+
+      // ----- GUI helpers -----
+      function generateNumberButtons(fun, parent, start, end, active = -1) {
         parent.innerHTML = "";
         let activeElement = null;
         let elements = [];
@@ -418,9 +560,11 @@
                 element2.classList.add("uncheckedBox");
               }
             }
+            fun(start + i);
           });
         }
         if (activeElement != null) activeElement.scrollIntoView();
+        return activeElement;
       }
 
       function generateTimeButtons(parent, start, end, active = -1) {
@@ -455,9 +599,11 @@
           });
         }
         if (activeElement != null) activeElement.scrollIntoView();
+        return elements;
       }
 
-      generateNumberButtons(
+      // ----- temporary tests -----
+      /*generateNumberButtons(
         document.getElementById("water-temperature-test"),
         10,
         35,
@@ -469,7 +615,7 @@
         0,
         9,
         1
-      );
+      );*/
 
       generateTimeButtons(
         document.getElementById("time-test"),
@@ -484,6 +630,7 @@
         16 * 4
       );
 
+      // ----- switch page warning -----
       var isDirty = function () {
         return true;
       };
