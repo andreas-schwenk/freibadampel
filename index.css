@@ -11,7 +11,7 @@
 .sliderContainer {
   overflow-y: hidden;
   overflow-x: auto;
-  width: calc(100% - 22px);
+  width: calc(100% - 5px);
   white-space: nowrap;
 }
 

@@ -31,7 +31,7 @@
     <meta name="msapplication-TileColor" content="#9c1e14" />
     <meta name="msapplication-config" content="img/favicon/browserconfig.xml" />-->
     <title>Freibadampel</title>
-    <link rel="stylesheet" href="index.css?v=14" />
+    <link rel="stylesheet" href="index.css?v=15" />
     <script src="https://cdn.jsdelivr.net/npm/context-filter-polyfill/dist/index.min.js"></script>
   </head>
 
@@ -44,6 +44,7 @@
         height: 115px;
         background-color: black;
         margin: 0px;
+        text-align: center;
       "
     >
       <h1
@@ -54,7 +55,11 @@
           margin-left: 5px;
         "
       >
-        FREIBADAMPEL
+        <!--FREIBAD<span style="color: red">A</span>M<span style="color: orange"
+          >P</span
+        >E<span style="color: green">L</span>-->
+        Freibad
+        <img src="traffic-light.png" style="width: 15px" /> Ampel
       </h1>
       <div
         style="
@@ -93,57 +98,34 @@
           "
         />
 
-        <h3>VORSCHAU</h3>
-        <canvas
-          id="preview-canvas"
-          width="512"
-          height="512"
-          style="width: 100%; max-width: 512px"
-        ></canvas>
+        <h3 style="text-align: center">VORSCHAU</h3>
+        <div style="text-align: center">
+          <canvas
+            id="preview-canvas"
+            width="512"
+            height="512"
+            style="width: 100%; max-width: 512px"
+          ></canvas>
+        </div>
 
         <div style="text-align: center">
           <button
             id="publish"
             class="button-primary"
-            style="margin-top: 4px; width: 100%"
+            style="margin-top: 4px; width: 100%; max-width: 512px"
           >
             publizieren
           </button>
         </div>
         <br />
-        <h3>ÖFFENTLICH</h3>
-        <div id="div-preview" class="panel">
-          <!-- -->
-          <span style="font-size: 16pt">FREIBAD XYZ</span>
-          <br />
-          <i>Schwimmer: 20.1 °C, Nichtschwimmer: 19.5 °C</i>
-          <br />
-          <br />
-          <b>Heute: 08:00-09:00 und 10:00-20:00 Uhr</b><br />
-          <br />
-          <i>Voraussichtlich:</i><br />
-          Morgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
-          Übermorgen: 08:00-09:00 und 10:00-20:00 Uhr<br />
-          <br />
-          <i
-            >Achtung: Zeiten können sich je nach Wetterlage jederzeit ändern.</i
-          >
+        <h3 style="text-align: center">AKTUELL ÖFFENTLICH</h3>
+        <div style="text-align: center">
+          <img id="public-img" style="width: 100%; max-width: 512px" />
         </div>
       </div>
 
       <!-- ========== TEMPERATURE ========== -->
-      <div id="div-temperature" style="display: none">
-        <div id="div-temperature" class="panel">
-          <b style="font-size: large">SCHWIMMER / °C</b><br />
-          <div style="text-align: center; font-size: x-large">20,1 °C</div>
-          <div style="padding-top: 4px">Vorkommastelle:</div>
-          <div id="water-temperature-test" class="sliderContainer"></div>
-          <div style="padding-top: 4px">Nachkommastelle:</div>
-          <div id="water-temperature-test-2" class="sliderContainer"></div>
-          <br />
-          <input type="checkbox" checked /> Wassertemperatur anzeigen
-        </div>
-      </div>
+      <div id="div-temperature" style="display: none; max-width: 1024px"></div>
 
       <!-- ========== HOURS ========== -->
 
@@ -164,9 +146,14 @@
             Heute,<br />
             Samstag, 05.08.2023
           </div>
-          <button class="button-primary" style="width: 100%">
-            Setze Standardzeiten</button
-          ><br />
+          <div style="text-align: center">
+            <button
+              class="button-primary"
+              style="width: 100%; max-width: 512px"
+            >
+              Setze Standardzeiten
+            </button>
+          </div>
           <div
             style="
               border-style: solid;
@@ -214,14 +201,24 @@
               <input type="checkbox" /> Endzeit nach hinten offen<br />
             </div>
 
-            <button class="button-primary" style="margin-top: 8px; width: 100%">
-              diesen Zeitslot löschen
-            </button>
+            <div style="text-align: center">
+              <button
+                class="button-primary"
+                style="margin-top: 8px; width: 100%; max-width: 512px"
+              >
+                diesen Zeitslot löschen
+              </button>
+            </div>
           </div>
           <br />
-          <button class="button-primary" style="width: 100%">
-            weiteren Zeitslot hinzufügen
-          </button>
+          <div style="text-align: center">
+            <button
+              class="button-primary"
+              style="width: 100%; max-width: 512px"
+            >
+              weiteren Zeitslot hinzufügen
+            </button>
+          </div>
           <br />
         </div>
 
@@ -301,6 +298,17 @@
     </div>
 
     <script>
+      // ----- load data -----
+      let data = {};
+      // TODO: check for errors
+      fetch("data.json")
+        .then((response) => response.json())
+        .then((d) => {
+          data = d;
+          showPreview();
+        });
+
+      // ----- publish -----
       function publish() {
         let img = document
           .getElementById("preview-canvas")
@@ -312,6 +320,8 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ "img-data": img }),
           //body: "just a test",
+        }).then(() => {
+          showPublished();
         });
       }
       document.getElementById("publish").addEventListener("click", () => {
@@ -342,19 +352,13 @@
             v.style.display = menuElement == u ? "block" : "none";
           }
           if (id == "temperature") showTemperature();
+          else if (id == "preview") {
+            showPreview();
+            showPublished();
+          }
           window.scrollTo(0, 0);
         });
       }
-
-      // ----- load data -----
-      let data = {};
-      // TODO: check for errors
-      fetch("data.json")
-        .then((response) => response.json())
-        .then((d) => {
-          data = d;
-          console.log(d);
-        });
 
       // ----- temperature -----
       function showTemperature() {
@@ -426,7 +430,15 @@
           checkboxShow.checked = dataPool["showTemp"];
           let checkboxShowText = document.createElement("span");
           checkboxShowText.innerHTML = " " + "Wassertemperatur anzeigen";
+          checkboxShowText.style.cursor = "pointer";
           panel.appendChild(checkboxShowText);
+          checkboxShow.addEventListener("click", () => {
+            dataPool["showTemp"] = checkboxShow.checked;
+          });
+          checkboxShowText.addEventListener("click", () => {
+            checkboxShow.click();
+            dataPool["showTemp"] = checkboxShow.checked;
+          });
           // spacing after panel
           parent.appendChild(document.createElement("br"));
           // scroll to active: TODO: DOES NOT WORK!!
@@ -447,14 +459,15 @@
         fontWeight = 600,
         italic = false
       ) {
-        ctx.filter = "blur(4px)";
+        ctx.filter = "blur(6px)";
         ctx.fillStyle = "black";
         let font = "";
         if (italic) font += "italic ";
         font += fontWeight + " " + fontSize + "px sans-serif";
         ctx.font = font;
         let m = ctx.measureText(text);
-        ctx.fillText(text, ctxSize / 2 - m.width / 2, y);
+        for (k = 0; k < 3; k++)
+          ctx.fillText(text, ctxSize / 2 - m.width / 2, y);
         ctx.filter = "none";
         ctx.fillStyle = "white";
         ctx.font = font;
@@ -462,12 +475,20 @@
         ctx.fillText(text, ctxSize / 2 - m.width / 2, y);
       }
 
-      function renderOutput(canvas) {
+      let img = document.getElementById("my-img");
+      img.addEventListener("load", (e) => {
+        showPreview();
+        showPublished();
+      });
+
+      function showPreview() {
+        let canvas = document.getElementById("preview-canvas");
+
         const ctxSize = 512;
         var ctx = canvas.getContext("2d");
         //ctx.globalAlpha = 0.45;
 
-        ctx.filter = "brightness(42%)";
+        ctx.filter = "brightness(55%)";
         ctx.drawImage(img, 0, 0);
         ctx.filter = "brightness(100%)";
         //ctx.globalAlpha = 1.0;
@@ -480,22 +501,29 @@
 
         let y = 75;
         ctx.font = "lighter 48px sans-serif";
-        let title = "Freibad XYZ";
+        let title = data["name"];
         let m = ctx.measureText(title);
         ctx.fillText(title, ctxSize / 2 - m.width / 2, y);
 
-        y += 25;
+        y += 35;
 
-        let text = "Schwimmer: 20.1 °C";
-        y += 40;
-        renderText(ctx, ctxSize, text, y, fontSizeTemperature, 300);
-        text = "Nichtschwimmer: 19.5 °C";
+        for (let i = 0; i < data["pools"].length; i++) {
+          let poolData = data["pools"][i];
+          if (poolData["showTemp"] == false) continue;
+          text =
+            poolData["id"] +
+            ": " +
+            poolData["temp"][0] +
+            "," +
+            poolData["temp"][1] +
+            " °C";
+          y += 30;
+          renderText(ctx, ctxSize, text, y, fontSizeTemperature, 300);
+        }
+
         y += 30;
-        renderText(ctx, ctxSize, text, y, fontSizeTemperature, 300);
 
-        y += 30;
-
-        text = "Öffungszeiten heute:";
+        text = "Öffnungszeiten heute:";
         y += 40;
         renderText(ctx, ctxSize, text, y, fontSizeHoursLabel, 300);
         y += 40;
@@ -517,24 +545,13 @@
         renderText(ctx, ctxSize, text, y, fontSizeHours);
 
         y += 50;
-        text = "Öffungszeiten können sich kurzfristig ändern!";
+        text = "Öffnungszeiten können sich kurzfristig ändern!";
         renderText(ctx, ctxSize, text, y, fontSizeInfo, 300, true);
-
-        /*ctx.filter = "blur(4px)";
-        ctx.fillStyle = "black";
-        ctx.font = "600 20px sans-serif";
-        title = "Heute: 08:00-09:00 und 10:00-20:00 Uhr";
-        m = ctx.measureText(title);
-        ctx.fillText(title, size / 2 - m.width / 2, 250);
-        ctx.filter = "blur(0px)";
-        ctx.fillStyle = "white";
-        ctx.fillText(title, size / 2 - m.width / 2, 250);*/
       }
 
-      let img = document.getElementById("my-img");
-      img.addEventListener("load", (e) => {
-        renderOutput(document.getElementById("preview-canvas"));
-      });
+      function showPublished() {
+        document.getElementById("public-img").src = "blub.jpg?v=" + Date.now();
+      }
 
       // ----- GUI helpers -----
       function generateNumberButtons(fun, parent, start, end, active = -1) {

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="59mm"
+   height="167mm"
+   viewBox="0 0 59 167"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   sodipodi:docname="traffic-light.svg"
+   inkscape:export-filename="traffic-light.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.51936849"
+     inkscape:cx="0.96270762"
+     inkscape:cy="268.59542"
+     inkscape:window-width="1470"
+     inkscape:window-height="847"
+     inkscape:window-x="0"
+     inkscape:window-y="701"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#ff0000;fill-opacity:0.93266;stroke-width:0.793999"
+       id="path290"
+       cx="29.686159"
+       cy="28.619381"
+       r="26.025293" />
+    <circle
+       style="fill:#ffd100;fill-opacity:0.93266;stroke-width:0.793999"
+       id="path290-0"
+       cx="29.686157"
+       cy="83.879829"
+       r="26.025293" />
+    <circle
+       style="fill:#008000;fill-opacity:0.93266;stroke-width:0.793999"
+       id="path290-8"
+       cx="30.336792"
+       cy="138.8972"
+       r="26.025293" />
+  </g>
+</svg>
