@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--TODO: favicons, leave page warning
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="img/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="img/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="img/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="mask-icon"
+      href="img/favicon/safari-pinned-tab.svg"
+      color="#9c1e14"
+    />
+    <link rel="shortcut icon" href="img/favicon/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#9c1e14" />
+    <meta name="msapplication-config" content="img/favicon/browserconfig.xml" />-->
+    <title>Freibadampel</title>
+    <link rel="stylesheet" href="edit.css?v=15" />
+    <script src="ext/context-filter-polyfill/index.min.js"></script>
+  </head>
+
+  <body style="margin: 0px">
+    <div
+      style="
+        position: fixed;
+        top: 0px;
+        width: 100%;
+        height: 115px;
+        background-color: black;
+        margin: 0px;
+        text-align: center;
+      "
+    >
+      <h1
+        style="
+          padding-bottom: 0px;
+          margin-bottom: 2px;
+          color: white;
+          margin-left: 5px;
+        "
+      >
+        <!--FREIBAD<span style="color: red">A</span>M<span style="color: orange"
+          >P</span
+        >E<span style="color: green">L</span>-->
+        Freibad
+        <img src="traffic-light.png" style="width: 15px" /> Ampel
+      </h1>
+      <div
+        style="
+          overflow-y: hidden;
+          overflow-x: auto;
+          width: calc(100% - 22px);
+          white-space: nowrap;
+          background-color: rgba(0, 0, 0, 1);
+          padding-top: 12px;
+          padding-left: 4px;
+          padding-right: 4px;
+          border-radius: 4px;
+        "
+      >
+        <!-- TODO: generate by JS -->
+        <button id="menu-preview" class="button-primary">Vorschau</button>
+        <button id="menu-temperature" class="button">Temperatur</button>
+        <button id="menu-hours" class="button">Zeiten</button>
+        <button id="menu-std-hours" class="button">Standardzeiten</button>
+        <button id="menu-pools" class="button">Bad</button>
+      </div>
+    </div>
+
+    <div style="margin-top: 120px; padding-left: 4px; padding-right: 4px">
+      <!-- ========== PREVIEW ========== -->
+      <div id="div-preview" style="display: block">
+        <img
+          id="my-img"
+          src="img512.jpg"
+          style="
+            width: 100%;
+            max-width: 512px;
+            display: block;
+            display: none;
+            /*-webkit-filter: brightness(35%);*/
+          "
+        />
+
+        <h3 style="text-align: center">VORSCHAU</h3>
+        <div style="text-align: center">
+          <canvas
+            id="preview-canvas"
+            width="512"
+            height="512"
+            style="width: 100%; max-width: 512px"
+          ></canvas>
+        </div>
+
+        <div style="text-align: center">
+          <button
+            id="publish"
+            class="button-primary"
+            style="margin-top: 4px; width: 100%; max-width: 512px"
+          >
+            publizieren
+          </button>
+        </div>
+        <br />
+        <h3 style="text-align: center">AKTUELL ÖFFENTLICH</h3>
+        <div style="text-align: center">
+          <img id="public-img" style="width: 100%; max-width: 512px" />
+        </div>
+      </div>
+
+      <!-- ========== TEMPERATURE ========== -->
+      <div id="div-temperature" style="display: none; max-width: 1024px"></div>
+
+      <!-- ========== HOURS ========== -->
+
+      <div id="div-hours" style="display: none">
+        <div class="panel">
+          <div
+            style="
+              font-size: x-large;
+              padding-left: 6px;
+              background-color: black;
+              color: white;
+              margin-bottom: 8px;
+              border-radius: 5px;
+              text-align: center;
+              padding: 8px;
+            "
+          >
+            Heute,<br />
+            Samstag, 05.08.2023
+          </div>
+          <div style="text-align: center">
+            <button
+              class="button-primary"
+              style="width: 100%; max-width: 512px"
+            >
+              Setze Standardzeiten
+            </button>
+          </div>
+          <div
+            style="
+              border-style: solid;
+              border-width: 2px;
+              border-radius: 5px;
+              border-color: black;
+              padding: 8px;
+              background-color: #000000;
+              color: white;
+            "
+          >
+            <!--<b style="font-size: large; color: #aa322c">ZEITSLOT &nbsp; 1</b
+            ><br />-->
+
+            <div style="text-align: center; font-size: x-large">
+              08:00 bis 16:00 Uhr
+            </div>
+
+            <div style="padding-top: 4px">Beginn:</div>
+
+            <div
+              id="time-test"
+              style="
+                overflow-y: hidden;
+                overflow-x: auto;
+                width: calc(100% - 0px);
+                white-space: nowrap;
+              "
+            ></div>
+
+            <div style="padding-top: 4px">Ende:</div>
+
+            <div
+              id="time-test-2"
+              style="
+                overflow-y: hidden;
+                overflow-x: auto;
+                width: calc(100% - 0px);
+                white-space: nowrap;
+              "
+            ></div>
+
+            <div style="margin-top: 15px">
+              <input type="checkbox" /> genaue Endzeit aktuell noch unklar<br />
+              <input type="checkbox" /> Endzeit nach hinten offen<br />
+            </div>
+
+            <div style="text-align: center">
+              <button
+                class="button-primary"
+                style="margin-top: 8px; width: 100%; max-width: 512px"
+              >
+                diesen Zeitslot löschen
+              </button>
+            </div>
+          </div>
+          <br />
+          <div style="text-align: center">
+            <button
+              class="button-primary"
+              style="width: 100%; max-width: 512px"
+            >
+              weiteren Zeitslot hinzufügen
+            </button>
+          </div>
+          <br />
+        </div>
+
+        So, 06.08.2023 (Morgen)<br />
+        Mo, 07.08.2023 (Übermorgen)<br />
+        Di, 08.08.2023<br />
+        Mi, 09.08.2023<br />
+      </div>
+
+      <!-- ========== STANDARD HOURS ========== -->
+
+      <div id="div-std-hours" style="display: none">
+        Montags<br />
+        Dienstags<br />
+        Mittwochs<br />
+        Donnerstags<br />
+        Freitags<br />
+        Samstags<br />
+        Sonntags<br />
+      </div>
+
+      <!-- ========== POOLS ========== -->
+      <div id="div-pools" style="display: none">
+        <div id="div-preview" class="panel">
+          <h2>Badname</h2>
+          Freibad XYZ
+        </div>
+
+        <br />
+
+        <div id="div-pools">
+          <div id="div-preview" class="panel">
+            <h2>Becken</h2>
+            <table style="width: 100%">
+              <tr>
+                <th>Name</th>
+                <th>Länge / m</th>
+                <th>Breite / m</th>
+                <th>Tiefe / m</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>Schwimmer</td>
+                <td>33</td>
+                <td>20</td>
+                <td>2,35</td>
+                <td><button class="button-primary">löschen</button></td>
+              </tr>
+              <tr>
+                <td>Nichtschwimmer</td>
+                <td>20</td>
+                <td>10</td>
+                <td>schief</td>
+                <td><button class="button-primary">löschen</button></td>
+              </tr>
+            </table>
+            <button class="button-primary" style="width: 100%">
+              Weiteres Becken hinzufügen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== XXXX TODO XXXXX ========== -->
+
+      <!--<br /><br />
+      <h2>Zusatzinfos</h2>
+
+      Achtung: Zeiten können sich jederzeit ändern.-->
+
+      <!-- ========== FOOTER ========== -->
+
+      <br />
+      <div style="text-align: center">
+        2023 by Andreas Schwenk, Lizenz: GPLv3
+      </div>
+    </div>
+
+    <script src="src/edit.js"></script>
+  </body>
+</html>

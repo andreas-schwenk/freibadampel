@@ -1,668 +1,464 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--TODO: favicons, leave page warning
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="img/favicon/apple-touch-icon.png"
+      href="/img/favicon/apple-touch-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="img/favicon/favicon-32x32.png"
+      href="/img/favicon/favicon-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="img/favicon/favicon-16x16.png"
+      href="/img/favicon/favicon-16x16.png"
     />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="/img/favicon/site.webmanifest" />
     <link
       rel="mask-icon"
-      href="img/favicon/safari-pinned-tab.svg"
-      color="#9c1e14"
+      href="/img/favicon/safari-pinned-tab.svg"
+      color="#458735"
     />
-    <link rel="shortcut icon" href="img/favicon/favicon.ico" />
-    <meta name="msapplication-TileColor" content="#9c1e14" />
-    <meta name="msapplication-config" content="img/favicon/browserconfig.xml" />-->
-    <title>Freibadampel</title>
-    <link rel="stylesheet" href="index.css?v=15" />
-    <script src="https://cdn.jsdelivr.net/npm/context-filter-polyfill/dist/index.min.js"></script>
+    <link rel="shortcut icon" href="/img/favicon/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#458735" />
+    <meta
+      name="msapplication-config"
+      content="/img/favicon/browserconfig.xml"
+    />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>freibad-ampel.de</title>
+
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script>
+
+    <!-- ===== ADDITIONAL CSS ===== -->
+    <style>
+      .zoom {
+        padding: 0px;
+        transition: transform 0.2s;
+        /* Animation */
+        height: 128px;
+        margin: 0 auto;
+      }
+
+      .zoom:hover {
+        transform: scale(1.05);
+      }
+
+      body {
+        padding-top: 64px;
+        background-color: #ffffff;
+      }
+
+      a:link {
+        text-decoration: none;
+      }
+
+      /*a:visited {
+        text-decoration: none;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }*/
+    </style>
   </head>
 
-  <body style="margin: 0px">
-    <div
-      style="
-        position: fixed;
-        top: 0px;
-        width: 100%;
-        height: 115px;
-        background-color: black;
-        margin: 0px;
-        text-align: center;
-      "
-    >
-      <h1
-        style="
-          padding-bottom: 0px;
-          margin-bottom: 2px;
-          color: white;
-          margin-left: 5px;
-        "
-      >
-        <!--FREIBAD<span style="color: red">A</span>M<span style="color: orange"
-          >P</span
-        >E<span style="color: green">L</span>-->
-        Freibad
-        <img src="traffic-light.png" style="width: 15px" /> Ampel
-      </h1>
-      <div
-        style="
-          overflow-y: hidden;
-          overflow-x: auto;
-          width: calc(100% - 22px);
-          white-space: nowrap;
-          background-color: rgba(0, 0, 0, 1);
-          padding-top: 12px;
-          padding-left: 4px;
-          padding-right: 4px;
-          border-radius: 4px;
-        "
-      >
-        <!-- TODO: generate by JS -->
-        <button id="menu-preview" class="button-primary">Vorschau</button>
-        <button id="menu-temperature" class="button">Temperatur</button>
-        <button id="menu-hours" class="button">Zeiten</button>
-        <button id="menu-std-hours" class="button">Standardzeiten</button>
-        <button id="menu-pools" class="button">Bad</button>
+  <body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand p-0 m-0" href="#">
+          &nbsp;
+          <img class="p-0 m-0" src="img/logo.svg?v=5" alt="" height="48px" />
+          &nbsp;
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul id="navbar-items" class="navbar-nav"></ul>
+        </div>
       </div>
-    </div>
+    </nav>
 
-    <div style="margin-top: 120px; padding-left: 4px; padding-right: 4px">
-      <!-- ========== PREVIEW ========== -->
-      <div id="div-preview" style="display: block">
+    <!-- ===== HOME ===== -->
+    <div id="home" class="container">
+      <!--<button type="button" class="btn btn-success">
+        <i class="fa-solid fa-right-to-bracket"></i>&nbsp; Login
+      </button>
+      <button type="button" class="btn btn-danger">
+        <i class="fa-solid fa-address-card"></i>&nbsp; Registrierung
+      </button>-->
+
+      <div class="text-center">
         <img
-          id="my-img"
-          src="img512.jpg"
-          style="
-            width: 100%;
-            max-width: 512px;
-            display: block;
-            display: none;
-            /*-webkit-filter: brightness(35%);*/
-          "
+          src="img/logo-large.svg?v=5"
+          class="img-fluid"
+          style="max-height: 176px"
         />
 
-        <h3 style="text-align: center">VORSCHAU</h3>
-        <div style="text-align: center">
-          <canvas
-            id="preview-canvas"
-            width="512"
-            height="512"
-            style="width: 100%; max-width: 512px"
-          ></canvas>
-        </div>
+        <br /><br />
 
-        <div style="text-align: center">
-          <button
-            id="publish"
-            class="button-primary"
-            style="margin-top: 4px; width: 100%; max-width: 512px"
-          >
-            publizieren
-          </button>
-        </div>
-        <br />
-        <h3 style="text-align: center">AKTUELL ÖFFENTLICH</h3>
-        <div style="text-align: center">
-          <img id="public-img" style="width: 100%; max-width: 512px" />
-        </div>
-      </div>
-
-      <!-- ========== TEMPERATURE ========== -->
-      <div id="div-temperature" style="display: none; max-width: 1024px"></div>
-
-      <!-- ========== HOURS ========== -->
-
-      <div id="div-hours" style="display: none">
-        <div class="panel">
-          <div
-            style="
-              font-size: x-large;
-              padding-left: 6px;
-              background-color: black;
-              color: white;
-              margin-bottom: 8px;
-              border-radius: 5px;
-              text-align: center;
-              padding: 8px;
-            "
-          >
-            Heute,<br />
-            Samstag, 05.08.2023
-          </div>
-          <div style="text-align: center">
-            <button
-              class="button-primary"
-              style="width: 100%; max-width: 512px"
-            >
-              Setze Standardzeiten
-            </button>
-          </div>
-          <div
-            style="
-              border-style: solid;
-              border-width: 2px;
-              border-radius: 5px;
-              border-color: black;
-              padding: 8px;
-              background-color: #000000;
-              color: white;
-            "
-          >
-            <!--<b style="font-size: large; color: #aa322c">ZEITSLOT &nbsp; 1</b
-            ><br />-->
-
-            <div style="text-align: center; font-size: x-large">
-              08:00 bis 16:00 Uhr
-            </div>
-
-            <div style="padding-top: 4px">Beginn:</div>
-
-            <div
-              id="time-test"
-              style="
-                overflow-y: hidden;
-                overflow-x: auto;
-                width: calc(100% - 0px);
-                white-space: nowrap;
-              "
-            ></div>
-
-            <div style="padding-top: 4px">Ende:</div>
-
-            <div
-              id="time-test-2"
-              style="
-                overflow-y: hidden;
-                overflow-x: auto;
-                width: calc(100% - 0px);
-                white-space: nowrap;
-              "
-            ></div>
-
-            <div style="margin-top: 15px">
-              <input type="checkbox" /> genaue Endzeit aktuell noch unklar<br />
-              <input type="checkbox" /> Endzeit nach hinten offen<br />
-            </div>
-
-            <div style="text-align: center">
-              <button
-                class="button-primary"
-                style="margin-top: 8px; width: 100%; max-width: 512px"
+        <div class="row">
+          <div class="col">
+            <p class="lead">
+              Bereits 2018 mahnte die DLRG die Schließung von ca. 80
+              Schwimmbädern pro Jahr in Deutschland an. Immer weniger Kinder
+              erwerben die Schwimmfähigkeit; die Zahl der Ertrinkungsunfälle
+              nimmt weiter zu. Die ohnehin knappen Kassen der Kommunen werden
+              mit einem immensen Sanierungsrückstau belastet. Für eine
+              <b>Digitalisierung</b> fehlen meist die personellen und
+              finanziellen Kapazitäten.
+            </p>
+            <h3>
+              Dieses
+              <span style="text-decoration: underline"
+                >gemeinnützige Projekt</span
               >
-                diesen Zeitslot löschen
-              </button>
+              ("Free as in Freedom") unterstützt die Bäder beim Hosten ihrer
+              Öffungszeiten.
+              <!--Es fallen keine Kosten bei der Nutzung an.-->
+            </h3>
+            <div class="text-start">
+              <ul>
+                <li class="lead">
+                  Nach einer kostenfreien Registierung wird eine digitale
+                  Infotafel erzeugt, die bequem in bestehende Webseiten
+                  eingebunden werden kann.
+                </li>
+                <li class="lead">
+                  Die Bedienung erfolgt über eine Webapplikation (optimiert für
+                  Smartphones) und nimmt nur sehr wenig Zeit in Anspruch.
+                </li>
+                <li class="lead">
+                  Pro Wochentag können individuelle Zeitslots als Standardzeiten
+                  eingestellt werden. Abweichende (z.B. witterungsbedingte)
+                  zeitliche Änderungen sind in wenigen Sekunden eingestellt.
+                  Optionale kann u.a. die aktuelle Wassertemperatur eingestellt
+                  werden.
+                </li>
+                <li class="lead">
+                  Es erfolgt KEINE Weitergabe der Daten an Dritte. Der alleinige
+                  Zweck dieses Projekts ist ein (kleiner) Beitrag zur Rettung
+                  der Freibäder!
+                </li>
+              </ul>
             </div>
-          </div>
-          <br />
-          <div style="text-align: center">
-            <button
-              class="button-primary"
-              style="width: 100%; max-width: 512px"
-            >
-              weiteren Zeitslot hinzufügen
-            </button>
-          </div>
-          <br />
-        </div>
-
-        So, 06.08.2023 (Morgen)<br />
-        Mo, 07.08.2023 (Übermorgen)<br />
-        Di, 08.08.2023<br />
-        Mi, 09.08.2023<br />
-      </div>
-
-      <!-- ========== STANDARD HOURS ========== -->
-
-      <div id="div-std-hours" style="display: none">
-        Montags<br />
-        Dienstags<br />
-        Mittwochs<br />
-        Donnerstags<br />
-        Freitags<br />
-        Samstags<br />
-        Sonntags<br />
-      </div>
-
-      <!-- ========== POOLS ========== -->
-      <div id="div-pools" style="display: none">
-        <div id="div-preview" class="panel">
-          <h2>Badname</h2>
-          Freibad XYZ
-        </div>
-
-        <br />
-
-        <div id="div-pools">
-          <div id="div-preview" class="panel">
-            <h2>Becken</h2>
-            <table style="width: 100%">
-              <tr>
-                <th>Name</th>
-                <th>Länge / m</th>
-                <th>Breite / m</th>
-                <th>Tiefe / m</th>
-                <th></th>
-              </tr>
-              <tr>
-                <td>Schwimmer</td>
-                <td>33</td>
-                <td>20</td>
-                <td>2,35</td>
-                <td><button class="button-primary">löschen</button></td>
-              </tr>
-              <tr>
-                <td>Nichtschwimmer</td>
-                <td>20</td>
-                <td>10</td>
-                <td>schief</td>
-                <td><button class="button-primary">löschen</button></td>
-              </tr>
-            </table>
-            <button class="button-primary" style="width: 100%">
-              Weiteres Becken hinzufügen
-            </button>
+            <h2>Beispiel</h2>
+            <img src="blub.jpg?v=1" class="img-fluid" alt="Responsive image" />
           </div>
         </div>
-      </div>
-
-      <!-- ========== XXXX TODO XXXXX ========== -->
-
-      <!--<br /><br />
-      <h2>Zusatzinfos</h2>
-
-      Achtung: Zeiten können sich jederzeit ändern.-->
-
-      <!-- ========== FOOTER ========== -->
-
-      <br />
-      <div style="text-align: center">
-        2023 by Andreas Schwenk, Lizenz: GPLv3
       </div>
     </div>
 
+    <!-- ===== FAQ ===== -->
+    <div id="faq" class="container" style="display: none">
+      <br />
+      <div class="row">
+        <div class="col">
+          <h1>FAQ - Häufig gestellte Fragen</h1>
+
+          <br />
+
+          <h3>Welche Kosten entstehen bei der Nutzung des Dienstes?</h3>
+          <p class="lead">
+            Diese Seite wird ehrenamtlich betrieben. Es fallen keine Kosten für
+            die Nutzung an. Insbesondere werden auch KEINE Daten an Dritte
+            weitergegeben.
+          </p>
+
+          <br />
+
+          <h3>
+            Wie binde ich das Panel auf die Webseite des Bades / der Kommune
+            ein?
+          </h3>
+          <p class="lead">
+            Die Öffungszeiten sind unter dem Link
+            <code>https://freibad-ampel.de/view.html?key=MEIN_SCHLUESSEL</code>
+            sichtbar. Nach Registierung erhält man automatisch einen
+            Schlüssel/Key zugewiesen. Dieser muss anstelle von
+            <code>MEIN_SCHLUESSEL</code> eingesetzt werden.
+          </p>
+          <p class="lead">
+            Die Einbindung auf einer Internetseite ist zum Beispiel wie folgt
+            möglich:
+          </p>
+          <pre id="iframe-example"></pre>
+
+          <br />
+
+          <h3>Wie lange wird der Dienst auf dieser Seite angeboten?</h3>
+          <p class="lead">
+            Nach aktuellem Planungsstand zeitlich unbeschränkt.
+          </p>
+
+          <br />
+
+          <h3>Welche Ausfallsicherheit wird garantiert?</h3>
+          <p class="lead">
+            Diese Seite wird über den Anbieter
+            <a href="https://strato.de">strato.de</a> gehostet. Siehe Hinweise
+            <a
+              href="https://www.strato.de/faq/sicherheit/wo-befinden-sich-meine-daten-und-wie-sind-sie-gesichert/"
+              >dort</a
+            >.
+          </p>
+
+          <br />
+
+          <h3>
+            Wie sieht die Haftung bei Nichtfunktionalität oder ähnlich aus?
+          </h3>
+          <p class="lead">
+            Der auf dieser Seite angebotene Service wird unentgeltlich durch
+            eine Privatperson geleistet. Eine Haftung in jeglicher Hinsicht ist
+            ausgeschlossen.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== REGISTER ===== -->
+    <div id="register" class="container" style="display: none">
+      <br />
+      <div class="row">
+        <div class="col">
+          <h1 class="display-4">Registrierung</h1>
+
+          <form id="register-form">
+            <br />
+
+            <div class="form-group">
+              <label for="exampleInputEmail1"><b>Stadt / Kommune</b></label>
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder=""
+              />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+              <label for="exampleInputEmail1"
+                ><b>Name des Bäderbetriebes</b></label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder=""
+              />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+              <label for="exampleInputEmail1"><b>Email Adresse</b></label>
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder=""
+              />
+              <small id="emailHelp" class="form-text text-muted"
+                >Wir werden Ihre E-Mail niemals an Dritte weitergeben..</small
+              >
+            </div>
+
+            <br />
+
+            <div class="form-group">
+              <label for="exampleInputPassword1"><b>Passwort</b></label>
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder=""
+              />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+              <label for="exampleInputPassword1"
+                ><b>Passwort wiederholen</b></label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder=""
+              />
+            </div>
+
+            <br />
+
+            <!-- TODO: https://developers.google.com/recaptcha/docs/v3 -->
+            <button
+              type="submit"
+              class="btn btn-primary g-recaptcha"
+              data-sitekey="reCAPTCHA_site_key"
+              data-callback="onSubmit"
+              data-action="submit"
+            >
+              Absenden
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PLAYGROUND ===== -->
+    <div id="playground" class="container" style="display: none">
+      <br />
+      <div class="row">
+        <div class="col">
+          <h1>Playground</h1>
+          <p class="lead">blub</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ABOUT ===== -->
+    <div id="about" class="container" style="display: none">
+      <br />
+      <div class="row">
+        <div class="col">
+          <h1>Impressum</h1>
+          <p class="lead">blub</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <br />
+    <div
+      id="footer"
+      class="container text-secondary bg-light p-4"
+      style="border-radius: 4px"
+    >
+      <img src="img/logo.svg?v=5" height="48px" />
+      &nbsp;&nbsp;&nbsp;
+      <img src="img/gpl-v3-logo.svg" style="height: 48px" />
+      <br /><br />
+      &copy; <span id="current-year"></span>
+      <a href="https://arts-and-sciences.com" class="text-secondary">
+        Andreas Schwenk
+        <br />
+        <i>
+          Leidenschaftlicher Schwimmer /// Wissenschaftlicher Mitarbeiter ///
+          Mitglied der Free Software Foundation (FSF)
+        </i>
+        <br /><br />
+        <i class="fa-regular fa-envelope"></i>
+        Kontakt:
+        <a href="mailto:info@freibad-ampel.de">info@freibad-ampel.de</a>
+        <br />
+      </a>
+    </div>
+    <br /><br />
+
     <script>
-      // ----- load data -----
-      let data = {};
-      // TODO: check for errors
-      fetch("data.json")
-        .then((response) => response.json())
-        .then((d) => {
-          data = d;
-          showPreview();
-        });
-
-      // ----- publish -----
-      function publish() {
-        let img = document
-          .getElementById("preview-canvas")
-          .toDataURL("image/jpeg", 0.5);
-        console.log(img);
-        fetch("save.php", {
-          method: "POST",
-          cache: "no-cache",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ "img-data": img }),
-          //body: "just a test",
-        }).then(() => {
-          showPublished();
-        });
+      function onSubmit(token) {
+        document.getElementById("register-form").submit();
       }
-      document.getElementById("publish").addEventListener("click", () => {
-        publish();
-      });
 
-      // ----- menu -----
-      let menuItemIDs = [
-        "preview",
-        "temperature",
-        "hours",
-        "std-hours",
-        "pools",
+      document.getElementById("current-year").innerHTML =
+        new Date().getFullYear();
+
+      const navLinks = [
+        // id, rendered name, href
+        "home # Über uns # .",
+        "faq # FAQ # .",
+        "play # Spielwiese # .",
+        'login # <i class="fa-solid fa-right-to-bracket"></i>&nbsp; Login # .',
+        'register # <i class="fa-solid fa-address-card"></i>&nbsp; Registrierung # .',
+        "about # Impressum # .",
+        'github # <i class="fa-brands fa-github"></i> # https://github.com/andreas-schwenk/freibadampel',
       ];
-      let menuElements = [];
-      let divElements = [];
-      for (let id of menuItemIDs) {
-        let menuElement = document.getElementById("menu-" + id);
-        menuElements.push(menuElement);
-        let divElement = document.getElementById("div-" + id);
-        divElements.push(divElement);
-        menuElement.addEventListener("click", () => {
-          for (let i = 0; i < menuElements.length; i++) {
-            let u = menuElements[i];
-            u.classList.value = "";
-            u.classList.add(menuElement == u ? "button-primary" : "button");
-            let v = divElements[i];
-            v.style.display = menuElement == u ? "block" : "none";
+      // ===== add navbar items =====
+      // get current page by URL parameter "page"
+      let urlParameters = new URLSearchParams(window.location.search);
+      let page = urlParameters.get("page");
+      if (page == null) page = "home";
+      let htmlNavbar = "";
+      for (const link of navLinks) {
+        const tokens = link.split("#");
+        const id = tokens[0].trim();
+        const name = tokens[1].trim();
+        const active = id === page ? " active" : "";
+        let href = tokens[2].trim();
+        let target = "_self";
+        if (href === ".") {
+          href = "index.html?page=" + id;
+          const element = document.getElementById(id);
+          if (element != null) {
+            document.getElementById(id).style.display =
+              id === page ? "block" : "none";
           }
-          if (id == "temperature") showTemperature();
-          else if (id == "preview") {
-            showPreview();
-            showPublished();
-          }
-          window.scrollTo(0, 0);
-        });
+        } else target = "_blank";
+        htmlNavbar += '<li class="nav-item">';
+        htmlNavbar += "    <a ";
+        htmlNavbar += '        id="nav-link-' + id + '"';
+        htmlNavbar += '        class="nav-link' + active + '"';
+        htmlNavbar += '        aria-current="page"';
+        htmlNavbar += '        href="' + href + '"';
+        htmlNavbar += '        target="' + target + '"';
+        htmlNavbar += '        style="cursor: pointer"';
+        htmlNavbar += ">" + name + "</a></li>";
       }
+      document.getElementById("navbar-items").innerHTML = htmlNavbar;
 
-      // ----- temperature -----
-      function showTemperature() {
-        let parent = document.getElementById("div-temperature");
-        parent.innerHTML = "";
-        for (let i = 0; i < data["pools"].length; i++) {
-          let dataPool = data["pools"][i];
-          let panel = document.createElement("div");
-          parent.appendChild(panel);
-          panel.classList.add("panel");
-          // title
-          let title = document.createElement("b");
-          title.innerHTML = dataPool["id"] + " / °C";
-          title.style.fontSize = "large";
-          panel.appendChild(title);
-          // line break
-          panel.appendChild(document.createElement("br"));
-          // current temperature
-          let currentTemp = document.createElement("div");
-          panel.appendChild(currentTemp);
-          currentTemp.style.textAlign = "center";
-          currentTemp.style.fontSize = "x-large";
-          currentTemp.innerHTML =
-            "" + dataPool["temp"][0] + "," + dataPool["temp"][1];
-          // pre decimal place selection
-          let preDecimalPlace = document.createElement("div");
-          panel.appendChild(preDecimalPlace);
-          preDecimalPlace.paddingTop = "4px";
-          preDecimalPlace.innerHTML = "Vorkommastelle";
-          let preDecimalPlaceSlider = document.createElement("div");
-          panel.appendChild(preDecimalPlaceSlider);
-          preDecimalPlaceSlider.classList.add("sliderContainer");
-          let preDecimalPlaceSliderActiveElement = generateNumberButtons(
-            (value) => {
-              dataPool["temp"][0] = value;
-              currentTemp.innerHTML =
-                "" + dataPool["temp"][0] + "," + dataPool["temp"][1];
-            },
-            preDecimalPlaceSlider,
-            10,
-            35,
-            dataPool["temp"][0]
-          );
-          // decimal place selection
-          let decimalPlace = document.createElement("div");
-          panel.appendChild(decimalPlace);
-          decimalPlace.paddingTop = "4px";
-          decimalPlace.innerHTML = "Nachkommastelle";
-          let decimalPlaceSlider = document.createElement("div");
-          panel.appendChild(decimalPlaceSlider);
-          decimalPlaceSlider.classList.add("sliderContainer");
-          let decimalPlaceSliderActiveElement = generateNumberButtons(
-            (value) => {
-              dataPool["temp"][1] = value;
-              currentTemp.innerHTML =
-                "" + dataPool["temp"][0] + "," + dataPool["temp"][1];
-            },
-            decimalPlaceSlider,
-            0,
-            9,
-            dataPool["temp"][1]
-          );
-          // line break
-          panel.appendChild(document.createElement("br"));
-          // checkbox: show water temperature
-          let checkboxShow = document.createElement("input");
-          checkboxShow.type = "checkbox";
-          panel.appendChild(checkboxShow);
-          checkboxShow.checked = dataPool["showTemp"];
-          let checkboxShowText = document.createElement("span");
-          checkboxShowText.innerHTML = " " + "Wassertemperatur anzeigen";
-          checkboxShowText.style.cursor = "pointer";
-          panel.appendChild(checkboxShowText);
-          checkboxShow.addEventListener("click", () => {
-            dataPool["showTemp"] = checkboxShow.checked;
-          });
-          checkboxShowText.addEventListener("click", () => {
-            checkboxShow.click();
-            dataPool["showTemp"] = checkboxShow.checked;
-          });
-          // spacing after panel
-          parent.appendChild(document.createElement("br"));
-          // scroll to active: TODO: DOES NOT WORK!!
-          if (preDecimalPlaceSliderActiveElement != null)
-            preDecimalPlaceSliderActiveElement.scrollIntoView();
-          if (decimalPlaceSliderActiveElement != null)
-            decimalPlaceSliderActiveElement.scrollIntoView();
-        }
-      }
-
-      // ----- render output -----
-      function renderText(
-        ctx,
-        ctxSize,
-        text,
-        y,
-        fontSize,
-        fontWeight = 600,
-        italic = false
-      ) {
-        ctx.filter = "blur(6px)";
-        ctx.fillStyle = "black";
-        let font = "";
-        if (italic) font += "italic ";
-        font += fontWeight + " " + fontSize + "px sans-serif";
-        ctx.font = font;
-        let m = ctx.measureText(text);
-        for (k = 0; k < 3; k++)
-          ctx.fillText(text, ctxSize / 2 - m.width / 2, y);
-        ctx.filter = "none";
-        ctx.fillStyle = "white";
-        ctx.font = font;
-        m = ctx.measureText(text);
-        ctx.fillText(text, ctxSize / 2 - m.width / 2, y);
-      }
-
-      let img = document.getElementById("my-img");
-      img.addEventListener("load", (e) => {
-        showPreview();
-        showPublished();
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
       });
 
-      function showPreview() {
-        let canvas = document.getElementById("preview-canvas");
-
-        const ctxSize = 512;
-        var ctx = canvas.getContext("2d");
-        //ctx.globalAlpha = 0.45;
-
-        ctx.filter = "brightness(55%)";
-        ctx.drawImage(img, 0, 0);
-        ctx.filter = "brightness(100%)";
-        //ctx.globalAlpha = 1.0;
-        ctx.fillStyle = "white";
-
-        let fontSizeHoursLabel = 28;
-        let fontSizeHours = 30;
-        let fontSizeTemperature = 23;
-        let fontSizeInfo = 18;
-
-        let y = 75;
-        ctx.font = "lighter 48px sans-serif";
-        let title = data["name"];
-        let m = ctx.measureText(title);
-        ctx.fillText(title, ctxSize / 2 - m.width / 2, y);
-
-        y += 35;
-
-        for (let i = 0; i < data["pools"].length; i++) {
-          let poolData = data["pools"][i];
-          if (poolData["showTemp"] == false) continue;
-          text =
-            poolData["id"] +
-            ": " +
-            poolData["temp"][0] +
-            "," +
-            poolData["temp"][1] +
-            " °C";
-          y += 30;
-          renderText(ctx, ctxSize, text, y, fontSizeTemperature, 300);
-        }
-
-        y += 30;
-
-        text = "Öffnungszeiten heute:";
-        y += 40;
-        renderText(ctx, ctxSize, text, y, fontSizeHoursLabel, 300);
-        y += 40;
-        text = "08:00-09:00 und 10:00-20:00 Uhr";
-        renderText(ctx, ctxSize, text, y, fontSizeHours);
-
-        text = "Planung morgen:";
-        y += 40;
-        renderText(ctx, ctxSize, text, y, fontSizeHoursLabel, 300);
-        text = "08:00-09:00 und 10:00-20:00 Uhr";
-        y += 40;
-        renderText(ctx, ctxSize, text, y, fontSizeHours);
-
-        text = "Planung übermorgen:";
-        y += 40;
-        renderText(ctx, ctxSize, text, y, fontSizeHoursLabel, 300);
-        text = "08:00-09:00 und 10:00-20:00 Uhr";
-        y += 40;
-        renderText(ctx, ctxSize, text, y, fontSizeHours);
-
-        y += 50;
-        text = "Öffnungszeiten können sich kurzfristig ändern!";
-        renderText(ctx, ctxSize, text, y, fontSizeInfo, 300, true);
-      }
-
-      function showPublished() {
-        document.getElementById("public-img").src = "blub.jpg?v=" + Date.now();
-      }
-
-      // ----- GUI helpers -----
-      function generateNumberButtons(fun, parent, start, end, active = -1) {
-        parent.innerHTML = "";
-        let activeElement = null;
-        let elements = [];
-        for (let i = start; i <= end; i++) {
-          let element = document.createElement("span");
-          elements.push(element);
-          element.innerHTML = "" + i;
-          element.classList.add(i == active ? "checkedBox" : "uncheckedBox");
-          parent.appendChild(element);
-        }
-        for (let i = 0; i < elements.length; i++) {
-          let element = elements[i];
-          element.addEventListener("click", () => {
-            for (let j = 0; j < elements.length; j++) {
-              let element2 = elements[j];
-              element2.classList.value = "";
-              if (i == j) {
-                element2.classList.add("checkedBox");
-              } else {
-                element2.classList.add("uncheckedBox");
-              }
-            }
-            fun(start + i);
-          });
-        }
-        if (activeElement != null) activeElement.scrollIntoView();
-        return activeElement;
-      }
-
-      function generateTimeButtons(parent, start, end, active = -1) {
-        // time = 4*hour + quarter
-        parent.innerHTML = "";
-        let activeElement = null;
-        let elements = [];
-        for (let i = start; i <= end; i++) {
-          let hour = "" + Math.floor(i / 4);
-          let minute = "" + Math.floor(i % 4) * 15;
-          if (minute.length == 1) minute = "0" + minute;
-          let element = document.createElement("span");
-          elements.push(element);
-          element.style.marginRight = "4px";
-          element.innerHTML = "" + hour + ":" + minute;
-          element.classList.add(i == active ? "checkedBox" : "uncheckedBox");
-          parent.appendChild(element);
-          if (i == active) activeElement = element;
-        }
-        for (let i = 0; i < elements.length; i++) {
-          let element = elements[i];
-          element.addEventListener("click", () => {
-            for (let j = 0; j < elements.length; j++) {
-              let element2 = elements[j];
-              element2.classList.value = "";
-              if (i == j) {
-                element2.classList.add("checkedBox");
-              } else {
-                element2.classList.add("uncheckedBox");
-              }
-            }
-          });
-        }
-        if (activeElement != null) activeElement.scrollIntoView();
-        return elements;
-      }
-
-      // ----- temporary tests -----
-      /*generateNumberButtons(
-        document.getElementById("water-temperature-test"),
-        10,
-        35,
-        20
-      );
-
-      generateNumberButtons(
-        document.getElementById("water-temperature-test-2"),
-        0,
-        9,
-        1
-      );*/
-
-      generateTimeButtons(
-        document.getElementById("time-test"),
-        5 * 4,
-        22 * 4,
-        8 * 4
-      );
-      generateTimeButtons(
-        document.getElementById("time-test-2"),
-        5 * 4,
-        22 * 4,
-        16 * 4
-      );
-
-      // ----- switch page warning -----
-      var isDirty = function () {
-        return true;
-      };
-      window.onload = function () {
-        window.addEventListener("beforeunload", function (e) {
-          if (!isDirty()) {
-            return undefined;
-          }
-          var confirmationMessage =
-            "It looks like you have been editing something. " +
-            "If you leave before saving, your changes will be lost.";
-          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-          return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-        });
-      };
+      let code = `<iframe
+  src="https://freibad-ampel.de/view.html?key=MEIN_SCHLUESSEL"
+  scrolling="no"
+  style="display: block; aspect-ratio: 1 / 1; height: 100%; width: 100%; border-style: none;"
+>
+</iframe>`;
+      while (code.includes("<")) code = code.replace("<", "&lt;");
+      while (code.includes(">")) code = code.replace(">", "&gt;");
+      document.getElementById("iframe-example").innerHTML = code;
     </script>
   </body>
 </html>

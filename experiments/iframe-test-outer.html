@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Freibadampel</title>
+  </head>
+  <body>
+    <div style="border-radius: 5px; border-style: solid; width: 50%">
+      <iframe
+        src="view.html?id=0000a5vw5iu2"
+        scrolling="no"
+        style="
+          display: block;
+          aspect-ratio: 1 / 1;
+          height: 100%;
+          width: 100%;
+          border-style: none;
+        "
+      ></iframe>
+    </div>
+    <br />
+    <img
+      src="blub.jpg"
+      style="width: 100%; border-radius: 5px; border-style: solid"
+    />
+    <script>
+      fetch("iframe-test.php")
+        .then((response) => response.blob())
+        //.then((myBlob) => reader.readAsDataURL(myBlob))
+        .then((blob) => {
+          let reader = new FileReader();
+          reader.onload = function () {
+            console.log(this.result);
+          };
+          reader.readAsDataURL(blob);
+        });
+    </script>
+  </body>
+</html>

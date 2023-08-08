@@ -1,0 +1,22 @@
+{
+  "name": "freibad-ampel.de",
+  "version": "1.0.0",
+  "description": "Website of www.freibad-ampel.de",
+  "main": "index.js",
+  "scripts": {
+    "webserver": "./webserver.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreas-schwenk/freibadampel.git"
+  },
+  "author": "Andreas Schwenk",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/andreas-schwenk/freibadampel/issues"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.1.2",
+    "bootstrap": "^5.3.1"
+  }
+}
