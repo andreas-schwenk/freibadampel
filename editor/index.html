@@ -30,9 +30,8 @@
     <link rel="shortcut icon" href="img/favicon/favicon.ico" />
     <meta name="msapplication-TileColor" content="#9c1e14" />
     <meta name="msapplication-config" content="img/favicon/browserconfig.xml" />-->
-    <title>Freibadampel</title>
-    <link rel="stylesheet" href="edit.css?v=15" />
-    <script src="ext/context-filter-polyfill/index.min.js"></script>
+    <title>freibad-ampel.de</title>
+    <link rel="stylesheet" href="index.css?v=36" />
   </head>
 
   <body style="margin: 0px">
@@ -41,10 +40,13 @@
         position: fixed;
         top: 0px;
         width: 100%;
-        height: 115px;
+        height: 120px;
         background-color: black;
         margin: 0px;
         text-align: center;
+        border-bottom-style: solid;
+        border-bottom-color: white;
+        border-bottom-width: 1.5px;
       "
     >
       <h1
@@ -58,8 +60,8 @@
         <!--FREIBAD<span style="color: red">A</span>M<span style="color: orange"
           >P</span
         >E<span style="color: green">L</span>-->
-        Freibad
-        <img src="traffic-light.png" style="width: 15px" /> Ampel
+        <img src="../img/logo.svg?v=1" style="width: 42px" />
+        freibad-ampel.de
       </h1>
       <div
         style="
@@ -75,15 +77,45 @@
         "
       >
         <!-- TODO: generate by JS -->
-        <button id="menu-preview" class="button-primary">Vorschau</button>
-        <button id="menu-temperature" class="button">Temperatur</button>
-        <button id="menu-hours" class="button">Zeiten</button>
-        <button id="menu-std-hours" class="button">Standardzeiten</button>
-        <button id="menu-pools" class="button">Bad</button>
+        <button
+          id="menu-preview"
+          class="button-primary"
+          style="width: 50px; text-align: center"
+        >
+          <img src="img/eye-solid.svg" style="height: 32px" />
+        </button>
+        <button
+          id="menu-temperature"
+          class="button"
+          style="width: 50px; text-align: center"
+        >
+          <img src="img/temperature-half-solid.svg" style="height: 32px" />
+        </button>
+        <button
+          id="menu-hours"
+          class="button"
+          style="width: 50px; text-align: center"
+        >
+          <img src="img/clock-regular.svg" style="height: 32px" />
+        </button>
+        <button
+          id="menu-std-hours"
+          class="button"
+          style="width: 50px; text-align: center"
+        >
+          <img src="img/clock-solid.svg" style="height: 32px" />
+        </button>
+        <button
+          id="menu-pools"
+          class="button"
+          style="width: 50px; text-align: center"
+        >
+          <img src="img/gear-solid.svg" style="height: 32px" />
+        </button>
       </div>
     </div>
 
-    <div style="margin-top: 120px; padding-left: 4px; padding-right: 4px">
+    <div style="margin-top: 125px; padding-left: 4px; padding-right: 4px">
       <!-- ========== PREVIEW ========== -->
       <div id="div-preview" style="display: block">
         <img
@@ -98,7 +130,8 @@
           "
         />
 
-        <h3 style="text-align: center">VORSCHAU</h3>
+        <h3 style="text-align: center">Vorschau</h3>
+
         <div style="text-align: center">
           <canvas
             id="preview-canvas"
@@ -112,13 +145,13 @@
           <button
             id="publish"
             class="button-primary"
-            style="margin-top: 4px; width: 100%; max-width: 512px"
+            style="margin-top: 4px; width: 100%; max-width: 384px"
           >
             publizieren
           </button>
         </div>
         <br />
-        <h3 style="text-align: center">AKTUELL ÖFFENTLICH</h3>
+        <h3 style="text-align: center">Öffentlich</h3>
         <div style="text-align: center">
           <img id="public-img" style="width: 100%; max-width: 512px" />
         </div>
@@ -129,82 +162,46 @@
 
       <!-- ========== HOURS ========== -->
 
-      <div id="div-hours" style="display: none">
+      <div id="div-hours" style="display: none; max-width: 1024px">
+        <h3 style="text-align: center">Aktuelle Zeiten</h3>
+
         <div class="panel">
-          <div
-            style="
-              font-size: x-large;
-              padding-left: 6px;
-              background-color: black;
-              color: white;
-              margin-bottom: 8px;
-              border-radius: 5px;
-              text-align: center;
-              padding: 8px;
-            "
-          >
-            Heute,<br />
-            Samstag, 05.08.2023
-          </div>
+          <div class="panelTitle">Heute: Samstag, 05.08.2023</div>
           <div style="text-align: center">
             <button
               class="button-primary"
-              style="width: 100%; max-width: 512px"
+              style="width: 100%; max-width: 384px"
             >
-              Setze Standardzeiten
+              setze Standardzeiten
             </button>
           </div>
-          <div
-            style="
-              border-style: solid;
-              border-width: 2px;
-              border-radius: 5px;
-              border-color: black;
-              padding: 8px;
-              background-color: #000000;
-              color: white;
-            "
-          >
-            <!--<b style="font-size: large; color: #aa322c">ZEITSLOT &nbsp; 1</b
-            ><br />-->
-
+          <div class="timeSlot">
             <div style="text-align: center; font-size: x-large">
               08:00 bis 16:00 Uhr
             </div>
-
-            <div style="padding-top: 4px">Beginn:</div>
-
+            <div style="padding-top: 4px">Beginn: Stunde</div>
             <div
-              id="time-test"
-              style="
-                overflow-y: hidden;
-                overflow-x: auto;
-                width: calc(100% - 0px);
-                white-space: nowrap;
-              "
+              id="time-test-hour"
+              style="overflow: auto; flex-wrap: wrap; -webkit-flex-wrap: wrap"
             ></div>
-
+            <div style="padding-top: 4px">Beginn: Minute</div>
+            <div
+              id="time-test-minute"
+              style="overflow: auto; flex-wrap: wrap; -webkit-flex-wrap: wrap"
+            ></div>
             <div style="padding-top: 4px">Ende:</div>
-
             <div
               id="time-test-2"
-              style="
-                overflow-y: hidden;
-                overflow-x: auto;
-                width: calc(100% - 0px);
-                white-space: nowrap;
-              "
+              style="overflow: auto; flex-wrap: wrap; -webkit-flex-wrap: wrap"
             ></div>
-
             <div style="margin-top: 15px">
               <input type="checkbox" /> genaue Endzeit aktuell noch unklar<br />
               <input type="checkbox" /> Endzeit nach hinten offen<br />
             </div>
-
             <div style="text-align: center">
               <button
                 class="button-primary"
-                style="margin-top: 8px; width: 100%; max-width: 512px"
+                style="margin-top: 8px; width: 100%; max-width: 384px"
               >
                 diesen Zeitslot löschen
               </button>
@@ -214,31 +211,17 @@
           <div style="text-align: center">
             <button
               class="button-primary"
-              style="width: 100%; max-width: 512px"
+              style="width: 100%; max-width: 384px"
             >
               weiteren Zeitslot hinzufügen
             </button>
           </div>
-          <br />
         </div>
-
-        So, 06.08.2023 (Morgen)<br />
-        Mo, 07.08.2023 (Übermorgen)<br />
-        Di, 08.08.2023<br />
-        Mi, 09.08.2023<br />
       </div>
 
       <!-- ========== STANDARD HOURS ========== -->
 
-      <div id="div-std-hours" style="display: none">
-        Montags<br />
-        Dienstags<br />
-        Mittwochs<br />
-        Donnerstags<br />
-        Freitags<br />
-        Samstags<br />
-        Sonntags<br />
-      </div>
+      <div id="div-std-hours" style="display: none; max-width: 1024px"></div>
 
       <!-- ========== POOLS ========== -->
       <div id="div-pools" style="display: none">
@@ -293,10 +276,13 @@
 
       <br />
       <div style="text-align: center">
-        2023 by Andreas Schwenk, Lizenz: GPLv3
+        &copy; <span id="current-year"></span>
+        <a href="https://arts-and-sciences.com" class="text-secondary">
+          Andreas Schwenk, Lizenz: GPLv3
+        </a>
       </div>
     </div>
 
-    <script src="src/edit.js"></script>
+    <script src="index.min.js?version=1691653710"></script>
   </body>
 </html>

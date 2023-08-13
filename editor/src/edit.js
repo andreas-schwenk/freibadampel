@@ -1,7 +1,14 @@
+import "../../ext/context-filter-polyfill/index.min.js";
+
+import { renderView } from "../../src/render.js";
+
+// ----- update year -----
+document.getElementById("current-year").innerHTML = new Date().getFullYear();
+
 // ----- load data -----
 let data = {};
 // TODO: check for errors
-fetch("data.json")
+fetch("../public/0000a5vw5iu2.json")
   .then((response) => response.json())
   .then((d) => {
     data = d;
@@ -45,13 +52,126 @@ for (let id of menuItemIDs) {
       let v = divElements[i];
       v.style.display = menuElement == u ? "block" : "none";
     }
-    if (id == "temperature") showTemperature();
-    else if (id == "preview") {
+    if (id == "preview") {
       showPreview();
       showPublished();
-    }
+    } else if (id == "temperature") showTemperature();
+    else if (id == "std-hours") showStandardHours();
     window.scrollTo(0, 0);
   });
+}
+
+// ----- opening hours -----
+function showStandardHours() {
+  let parent = document.getElementById("div-std-hours");
+  parent.innerHTML = "";
+  // title
+  let title = document.createElement("h3");
+  title.style.textAlign = "center";
+  title.innerHTML = "Standard Zeiten";
+  parent.appendChild(title);
+  // for all weekdays
+  let weekdayStrings = [
+    "Montags",
+    "Dienstags",
+    "Mittwochs",
+    "Donnerstangs",
+    "Freitags",
+    "Samstags",
+    "Sonntags",
+  ];
+  for (let i = 0; i < 7; i++) {
+    let dayPanel = createDayPanel(weekdayStrings[i]);
+    parent.appendChild(dayPanel);
+    //
+    parent.appendChild(document.createElement("br"));
+  }
+}
+
+function createTimeSlotConfig() {
+  let div = document.createElement("div");
+  div.classList.add("timeSlot");
+  // time slot string
+  let slotString = document.createElement("div");
+  slotString.style.textAlign = "center";
+  slotString.style.fontSize = "x-large";
+  slotString.innerHTML = "XX:XX bis XX:XX Uhr";
+  div.appendChild(slotString);
+  // time selection:
+  //   (a) begin-hour (b) begin-minute (c) end-hour (d) end-minute
+  for (let i = 0; i < 4; i++) {
+    // (a) label
+    let label = document.createElement("div");
+    label.style.paddingTop = "4px";
+    switch (i) {
+      case 0:
+        label.innerHTML = "Beginn: Stunde";
+        break;
+      case 1:
+        label.innerHTML = "Beginn: Minute";
+        break;
+      case 2:
+        label.innerHTML = "Ende: Stunde";
+        break;
+      case 3:
+        label.innerHTML = "Ende: Minute";
+        break;
+    }
+    div.appendChild(label);
+    // (b) selection
+    let selection = document.createElement("div");
+    selection.style.overflow = "auto";
+    selection.style.flexWrap = "wrap";
+    selection.style.webkitFlexWrap = "wrap"; // TODO: needed?
+    generateNumberButtons(
+      () => {},
+      selection,
+      0,
+      i % 2 == 0 ? 23 : 59,
+      i % 2 == 0 ? 1 : 5,
+      i % 2 == 0 ? (i == 0 ? 8 : 16) : 0
+    );
+    div.appendChild(selection);
+  }
+  // delete timeslot button
+  let center = document.createElement("div");
+  center.style.textAlign = "center";
+  div.appendChild(center);
+  let deleteTimeSlotButton = document.createElement("button");
+  center.appendChild(deleteTimeSlotButton);
+  deleteTimeSlotButton.classList.add("button-primary");
+  deleteTimeSlotButton.style.width = "100%";
+  deleteTimeSlotButton.style.maxWidth = "384px";
+  deleteTimeSlotButton.style.marginTop = "8px";
+  deleteTimeSlotButton.innerHTML = "diesen Zeitslot löschen";
+  // return div
+  return div;
+}
+
+function createDayPanel(titleText) {
+  let panel = document.createElement("div");
+  panel.classList.add("panel");
+  // title
+  let title = document.createElement("div");
+  title.classList.add("panelTitle");
+  title.innerHTML = titleText;
+  panel.appendChild(title);
+  // time slots
+  panel.appendChild(createTimeSlotConfig());
+  // spacing
+  panel.appendChild(document.createElement("br"));
+  // add another time slot button
+  let center = document.createElement("div");
+  center.style.textAlign = "center";
+  panel.appendChild(center);
+  let addTimeSlotButton = document.createElement("button");
+  center.appendChild(addTimeSlotButton);
+  addTimeSlotButton.classList.add("button-primary");
+  addTimeSlotButton.style.width = "100%";
+  addTimeSlotButton.style.maxWidth = "384px";
+  addTimeSlotButton.innerHTML = "weiteren Zeitslot hinzufügen";
+  // return panel
+  return panel;
 }
 
 // ----- temperature -----
@@ -74,7 +194,7 @@ function showTemperature() {
     let currentTemp = document.createElement("div");
     panel.appendChild(currentTemp);
     currentTemp.style.textAlign = "center";
-    currentTemp.style.fontSize = "x-large";
+    currentTemp.style.fontSize = "xx-large";
     currentTemp.innerHTML =
       "" + dataPool["temp"][0] + "," + dataPool["temp"][1];
     // pre decimal place selection
@@ -94,6 +214,7 @@ function showTemperature() {
       preDecimalPlaceSlider,
       10,
       35,
+      1,
       dataPool["temp"][0]
     );
     // decimal place selection
@@ -113,6 +234,7 @@ function showTemperature() {
       decimalPlaceSlider,
       0,
       9,
+      1,
       dataPool["temp"][1]
     );
     // line break
@@ -153,7 +275,7 @@ img.addEventListener("load", (e) => {
 
 function showPreview() {
   let canvas = document.getElementById("preview-canvas");
-  renderView(canvas, data);
+  renderView(canvas, data); // TODO: background image
 }
 
 function showPublished() {
@@ -161,11 +283,11 @@ function showPublished() {
 }
 
 // ----- GUI helpers -----
-function generateNumberButtons(fun, parent, start, end, active = -1) {
+function generateNumberButtons(fun, parent, start, end, step = 1, active = -1) {
   parent.innerHTML = "";
   let activeElement = null;
   let elements = [];
-  for (let i = start; i <= end; i++) {
+  for (let i = start; i <= end; i += step) {
     let element = document.createElement("span");
     elements.push(element);
     element.innerHTML = "" + i;
@@ -184,20 +306,21 @@ function generateNumberButtons(fun, parent, start, end, active = -1) {
           element2.classList.add("uncheckedBox");
         }
       }
-      fun(start + i);
+      fun(start + i * step);
     });
   }
   if (activeElement != null) activeElement.scrollIntoView();
   return activeElement;
 }
 
-function generateTimeButtons(parent, start, end, active = -1) {
+/*function generateTimeButtons(parent, start, end, active = -1) {
   // time = 4*hour + quarter
   parent.innerHTML = "";
   let activeElement = null;
   let elements = [];
   for (let i = start; i <= end; i++) {
     let hour = "" + Math.floor(i / 4);
+    if (hour.length == 1) hour = "0" + hour;
     let minute = "" + Math.floor(i % 4) * 15;
     if (minute.length == 1) minute = "0" + minute;
     let element = document.createElement("span");
@@ -224,29 +347,25 @@ function generateTimeButtons(parent, start, end, active = -1) {
   }
   if (activeElement != null) activeElement.scrollIntoView();
   return elements;
-}
+}*/
 
 // ----- temporary tests -----
-/*generateNumberButtons(
-  document.getElementById("water-temperature-test"),
-  10,
-  35,
-  20
-);
 
 generateNumberButtons(
-  document.getElementById("water-temperature-test-2"),
+  () => {},
+  document.getElementById("time-test-hour"),
   0,
-  9,
-  1
-);*/
-
-generateTimeButtons(document.getElementById("time-test"), 5 * 4, 22 * 4, 8 * 4);
-generateTimeButtons(
-  document.getElementById("time-test-2"),
-  5 * 4,
-  22 * 4,
-  16 * 4
+  23,
+  1,
+  8
+);
+generateNumberButtons(
+  () => {},
+  document.getElementById("time-test-minute"),
+  0,
+  59,
+  5,
+  0
 );
 
 // ----- switch page warning -----

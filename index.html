@@ -47,7 +47,7 @@
 
     <!-- ===== JAVASCRIPT ===== -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script>
+    <!-- TODO <script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script> -->
 
     <!-- ===== ADDITIONAL CSS ===== -->
     <style>
@@ -134,7 +134,8 @@
               Schwimmbädern pro Jahr in Deutschland an. Immer weniger Kinder
               erwerben die Schwimmfähigkeit; die Zahl der Ertrinkungsunfälle
               nimmt weiter zu. Die ohnehin knappen Kassen der Kommunen werden
-              mit einem immensen Sanierungsrückstau belastet. Für eine
+              mit einem immensen Sanierungsrückstau für die Bäder belastet. Für
+              eine
               <b>Digitalisierung</b> fehlen meist die personellen und
               finanziellen Kapazitäten.
             </p>
@@ -143,8 +144,7 @@
               <span style="text-decoration: underline"
                 >gemeinnützige Projekt</span
               >
-              ("Free as in Freedom") unterstützt die Bäder beim Hosten ihrer
-              Öffungszeiten.
+              unterstützt die Bäder beim Hosten ihrer Öffnungszeiten.
               <!--Es fallen keine Kosten bei der Nutzung an.-->
             </h3>
             <div class="text-start">
@@ -162,7 +162,7 @@
                   Pro Wochentag können individuelle Zeitslots als Standardzeiten
                   eingestellt werden. Abweichende (z.B. witterungsbedingte)
                   zeitliche Änderungen sind in wenigen Sekunden eingestellt.
-                  Optionale kann u.a. die aktuelle Wassertemperatur eingestellt
+                  Optional kann u.a. die aktuelle Wassertemperatur eingestellt
                   werden.
                 </li>
                 <li class="lead">
@@ -172,6 +172,10 @@
                 </li>
               </ul>
             </div>
+            <p class="lead fw-bold">
+              Eine Liste häufig gestellter Fragen und Antworten findet man
+              <a href="index.html?page=faq">hier</a>.
+            </p>
             <h2>Beispiel</h2>
             <img src="blub.jpg?v=1" class="img-fluid" alt="Responsive image" />
           </div>
@@ -185,6 +189,16 @@
       <div class="row">
         <div class="col">
           <h1>FAQ - Häufig gestellte Fragen</h1>
+
+          <br />
+
+          <div class="lead m-3 p-4 bg-light">
+            <i>
+              Sollte Ihre Frage hier nicht gelistet sein, senden Sie gerne eine
+              Nachricht an <i class="fa-regular fa-envelope"></i>
+              <a href="mailto:info@freibad-ampel.de">info@freibad-ampel.de</a>
+            </i>
+          </div>
 
           <br />
 
@@ -202,7 +216,7 @@
             ein?
           </h3>
           <p class="lead">
-            Die Öffungszeiten sind unter dem Link
+            Die Öffnungszeiten sind unter dem Link
             <code>https://freibad-ampel.de/view.html?key=MEIN_SCHLUESSEL</code>
             sichtbar. Nach Registierung erhält man automatisch einen
             Schlüssel/Key zugewiesen. Dieser muss anstelle von
@@ -239,70 +253,286 @@
             Wie sieht die Haftung bei Nichtfunktionalität oder ähnlich aus?
           </h3>
           <p class="lead">
-            Der auf dieser Seite angebotene Service wird unentgeltlich durch
-            eine Privatperson geleistet. Eine Haftung in jeglicher Hinsicht ist
+            Der auf dieser Seite angebotene Service wird ehrenamtlich durch eine
+            Privatperson betrieben. Eine Haftung in jeglicher Hinsicht ist
             ausgeschlossen.
+          </p>
+
+          <br />
+
+          <h3>
+            Ist das Panel mit den Öffnungszeiten über
+            <a href="https://freibad-ampel.de">https://freibad-ampel.de</a>
+            zentral gelistet?
+          </h3>
+          <p class="lead">
+            Nein. Diese Seite strebt <i>keine</i> zentrale Auflistung von Bädern
+            und deren Öffnungszeiten an. Der Zugriff auf das Panel ist nur über
+            den Link
+            <code>https://freibad-ampel.de?view.html?key=MEIN_SCHLUESSEL</code>
+            möglich. (Ein <i>Directory Listing</i> wird technisch unterbunden.)
+          </p>
+
+          <br />
+
+          <h3>
+            Ist die Einrichtung mehrerer Personenaccounts pro Bad möglich?
+          </h3>
+          <p class="lead">TODO</p>
+
+          <br />
+
+          <h3>Welche Daten werden gespeichert?</h3>
+          <p class="lead">Das Datenmodell findet man hier. TODO.</p>
+
+          <br />
+
+          <h3>
+            Wird für die Nutzung auf Smartphones ein großes Datenvolumen
+            benötigt?
+          </h3>
+          <p class="lead">
+            Für die Darstellung des Panels werden ca. 15 KiloBytes (plus die
+            Größe des Hintergrundbildes) an Daten übertragen.
+          </p>
+          <p class="lead">
+            Für den Editor: Wenn man sich unter
+            <a href="https://login.freibad-ampel.de">
+              https://login.freibad-ampel.de
+            </a>
+            einloggt, also nicht über die Startseite geht, ist der Datentransfer
+            minimal. TODO: measure data / EDGE Verbindung??.
           </p>
         </div>
       </div>
     </div>
 
     <!-- ===== REGISTER ===== -->
-    <div id="register" class="container" style="display: none">
+
+    <div id="mngt" class="container" style="display: none">
       <br />
       <div class="row">
         <div class="col">
-          <h1 class="display-4">Registrierung</h1>
+          <p class="lead text-center text-dark fw-bold fst-italic">
+            Hinweis: Zum Anpassen der Öffnungszeiten bitte den
+            <a href="#"><i class="fa-solid fa-pen-to-square"></i> Editor</a>
+            benutzen.
+          </p>
 
-          <form id="register-form">
-            <br />
+          <h1 class="display-4">Verwaltung</h1>
+          <br />
 
-            <div class="form-group">
-              <label for="exampleInputEmail1"><b>Stadt / Kommune</b></label>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder=""
-              />
-            </div>
+          <p class="lead">
+            Diese Seite dient der Verwaltung der Bäder. Hier können Metadaten,
+            wie zum Beispiel der Badname oder ein Hintergrundbild, festgelegt
+            werden. Weiterhin erhält man auf dieser Seite die Logindaten für den
+            Öffnungszeiten-Editor.
+          </p>
 
-            <br />
+          <div class="border border-3 border-black rounded p-2">
+            <p class="display-6">Anmelden / Registrieren</p>
 
-            <div class="form-group">
-              <label for="exampleInputEmail1"
-                ><b>Name des Bäderbetriebes</b></label
+            <p class="fst-italic px-5">
+              Tipp: Zum Ausprobieren kann als Username <b>demo</b> und als
+              Passwort ebenfalls <b>demo</b> verwendet werden.<br />
+              Hinweis: Im Demo-Modus werden keine Daten gespeichert!
+            </p>
+
+            <form id="register-form">
+              <div class="form-group">
+                <label for="exampleInputEmail1"><b>Username</b></label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputEmail1"><b>Passwort</b></label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <!-- TODO: https://developers.google.com/recaptcha/docs/v3 -->
+              <button
+                type="submit"
+                class="btn btn-primary g-recaptcha"
+                data-sitekey="reCAPTCHA_site_key"
+                data-callback="onSubmit"
+                data-action="submit"
               >
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder=""
-              />
-            </div>
+                Einloggen
+              </button>
 
-            <br />
-
-            <div class="form-group">
-              <label for="exampleInputEmail1"><b>Email Adresse</b></label>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder=""
-              />
-              <small id="emailHelp" class="form-text text-muted"
-                >Wir werden Ihre E-Mail niemals an Dritte weitergeben..</small
+              <button
+                type="submit"
+                class="btn btn-primary g-recaptcha"
+                data-sitekey="reCAPTCHA_site_key"
+                data-callback="onSubmit"
+                data-action="submit"
               >
-            </div>
+                Passwort vergessen
+              </button>
 
-            <br />
+              <br /><br />
+
+              <button class="btn btn-danger">
+                Noch kein Konto? Hier registrieren!
+              </button>
+            </form>
+          </div>
+
+          <br />
+
+          <div
+            id="registration"
+            class="border border-3 border-black rounded p-2"
+          >
+            <p class="display-6">Registrierung</p>
+
+            <form id="register-form">
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputEmail1"><b>Stadt / Kommune</b></label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputEmail1"
+                  ><b>Name des Bäderbetriebes</b></label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">
+                  <b>
+                    Anzahl der Bäder, für die ein Öffnungszeiten-Panel erstellt
+                    werden soll
+                  </b>
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="1"
+                />
+                <small id="emailHelp" class="form-text text-muted">
+                  Kann später noch angepasst werden.
+                </small>
+              </div>
+
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputEmail1"><b>Email Adresse</b></label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+                <small id="emailHelp" class="form-text text-muted">
+                  Wir werden Ihre E-Mail niemals an Dritte weitergeben.
+                </small>
+              </div>
+
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputPassword1"><b>Passwort</b></label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder=""
+                />
+                <small id="emailHelp" class="form-text text-muted">
+                  Mindestlänge: 12 Zeichen. Mindestens 1 Großbuchstabe.
+                  Mindestens 1 Sonderzeichen (z.B. <code>#</code> oder
+                  <code>:</code> oder <code>?</code> oder <code>;</code>).
+                  Mindestens 1 Zahl.
+                </small>
+              </div>
+
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputPassword1"
+                  ><b>Passwort wiederholen</b></label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <!-- TODO: https://developers.google.com/recaptcha/docs/v3 -->
+              <button
+                type="submit"
+                class="btn btn-primary g-recaptcha"
+                data-sitekey="reCAPTCHA_site_key"
+                data-callback="onSubmit"
+                data-action="submit"
+              >
+                Absenden
+              </button>
+            </form>
+          </div>
+
+          <br />
+
+          <div
+            id="registration"
+            class="border border-3 border-black rounded p-2"
+          >
+            <p class="display-6">Einstellungen</p>
+
+            <p>angemeldet als <b>TODO</b></p>
+            <button class="btn btn-primary">Ausloggen</button>
+            <button class="btn btn-danger">Konto löschen</button>
+
+            <hr />
+
+            <b>Passwort ändern</b><br />
 
             <div class="form-group">
-              <label for="exampleInputPassword1"><b>Passwort</b></label>
+              <label for="exampleInputPassword1"><b>Altes Passwort</b></label>
               <input
                 type="password"
                 class="form-control"
@@ -311,11 +541,24 @@
               />
             </div>
 
-            <br />
+            <div class="form-group">
+              <label for="exampleInputPassword1"><b>Neues Passwort</b></label>
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder=""
+              />
+              <small id="emailHelp" class="form-text text-muted">
+                Mindestlänge: 12 Zeichen. Mindestens 1 Großbuchstabe. Mindestens
+                1 Sonderzeichen (z.B. <code>#</code> oder <code>:</code> oder
+                <code>?</code> oder <code>;</code>). Mindestens 1 Zahl.
+              </small>
+            </div>
 
             <div class="form-group">
               <label for="exampleInputPassword1"
-                ><b>Passwort wiederholen</b></label
+                ><b>Neues Passwort wiederholen</b></label
               >
               <input
                 type="password"
@@ -327,28 +570,176 @@
 
             <br />
 
-            <!-- TODO: https://developers.google.com/recaptcha/docs/v3 -->
-            <button
-              type="submit"
-              class="btn btn-primary g-recaptcha"
-              data-sitekey="reCAPTCHA_site_key"
-              data-callback="onSubmit"
-              data-action="submit"
+            <button class="btn btn-primary">Passwort ändern</button>
+
+            <br />
+            <br />
+
+            <div
+              id="registration"
+              class="border border-5 border-dark p-2 shadow-lg bg-body"
             >
-              Absenden
-            </button>
-          </form>
+              <p class="display-6">Bad 1</p>
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">
+                  <b>Name des Bads</b>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+                <small id="emailHelp" class="form-text text-muted">
+                  Zum Beispiel <i>Freibad Tatooine</i>
+                </small>
+              </div>
+              <button class="btn btn-primary">Badnamen speichern</button>
+              <hr />
+              <button class="btn btn-primary">
+                Neues Hintergrundbild hochladen
+              </button>
+              <hr />
+              <b>Vorschau des Panels:</b>
+              <br />
+              <div class="text-center">
+                <iframe
+                  src="view.html?key=0000a5vw5iu2"
+                  scrolling="no"
+                  style="
+                    display: block;
+                    aspect-ratio: 1 / 1;
+                    height: 100%;
+                    width: 100%;
+                    border-style: none;
+                    max-width: 512px;
+                    margin: 0 auto;
+                  "
+                >
+                </iframe>
+              </div>
+              <hr />
+              <b>Direktlink zum Panel:</b>
+              <br />
+              &nbsp;&nbsp;&nbsp;<a href="#" target="_blank"
+                >https://freibad-ampel.de/view.html?key=0000a5vw5iu2</a
+              >
+              <hr />
+              <b
+                >Beispielcode, mit dem das Panel auf Webseiten eingebunden
+                werden kann:
+              </b>
+              <div class="border border-3 border-dark bg-dark text-white">
+                <pre><code>
+  &lt;iframe
+    src="https://freibad-ampel.de/view.html?key=0000a5vw5iu2"
+    scrolling="no"
+    style="
+      display: block; 
+      aspect-ratio: 1 / 1; 
+      height: 100%; 
+      width: 100%; 
+      border-style: none; 
+      margin: 0 auto"
+  &gt;
+  &lt;/iframe&gt;
+</code></pre>
+              </div>
+              <hr />
+              <b
+                >Zugangsdaten zum Öffnungszeiten-Editor unter
+                <a href="#">https://freibad-ampel.de/editor/</a>:</b
+              ><br />
+
+              <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Bad</th>
+                    <th scope="col">Passwort</th>
+                    <th scope="col">PIN zum Publizieren</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0000a5vw</td>
+                    <td>a3i2#ihs</td>
+                    <td>7468</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-danger px-5 lead">
+                Achtung: diese Zugangsdaten sollten nur dem Personal des Bades
+                "Freibad XYZ" ausgehändigt werden.
+              </p>
+              <button class="btn btn-primary">Passwort neu generieren</button>
+              <button class="btn btn-primary">PIN neu generieren</button>
+              <hr />
+              <button class="btn btn-danger">Bad löschen</button>
+            </div>
+            <br />
+            <button class="btn btn-primary">Weiteres Bad anlegen</button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- ===== PLAYGROUND ===== -->
-    <div id="playground" class="container" style="display: none">
+    <!-- <div id="play" class="container" style="display: none">
       <br />
       <div class="row">
         <div class="col">
-          <h1>Playground</h1>
-          <p class="lead">blub</p>
+          <h1>Spielwiese</h1>
+          <p class="lead">
+            Die Funktionalität kann auch ohne Registrierung mit einem
+            Demoaccount (keine Speicherung von Daten) ausprobiert werden. Dazu
+            nutzt man die folgenden Login-Daten:
+          </p>
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Nutzername</th>
+                <td>demo</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Passwort</th>
+                <td>demo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  -->
+
+    <!-- ===== EDITOR ===== -->
+    <div id="editor" class="container" style="display: none">
+      <br />
+      <div class="row">
+        <div class="col">
+          <h1>Öffnungszeiten-Editor</h1>
+          <p class="lead">
+            Der Öffnungszeiten-Editor ist unter dem folgenden Link erreichbar:
+          </p>
+          <div class="text-center">
+            <p class="display-4">
+              <a href="https://freibad-ampel.de/editor/" target="_blank"
+                >https://freibad-ampel.de/editor/</a
+              >
+            </p>
+          </div>
+          <p class="lead">
+            Die Zugangsdaten werden nach Registrierung unter dem Menüpunkt
+            <b><i class="fa-solid fa-address-card"></i> Verwaltung</b>
+            bereitgestellt.
+          </p>
+          <p class="lead">QR Code zum Link:</p>
+          <div class="text-center">
+            <img src="img/editor-qr.png?v=2" class="img-fluid" />
+          </div>
         </div>
       </div>
     </div>
@@ -378,17 +769,17 @@
       &copy; <span id="current-year"></span>
       <a href="https://arts-and-sciences.com" class="text-secondary">
         Andreas Schwenk
-        <br />
-        <i>
-          Leidenschaftlicher Schwimmer /// Wissenschaftlicher Mitarbeiter ///
-          Mitglied der Free Software Foundation (FSF)
-        </i>
-        <br /><br />
-        <i class="fa-regular fa-envelope"></i>
-        Kontakt:
-        <a href="mailto:info@freibad-ampel.de">info@freibad-ampel.de</a>
-        <br />
       </a>
+      <br />
+      <i>
+        Leidenschaftlicher Schwimmer /// Wissenschaftlicher Mitarbeiter ///
+        Mitglied der Free Software Foundation (FSF)
+      </i>
+      <br /><br />
+      <i class="fa-regular fa-envelope"></i>
+      Kontakt:
+      <a href="mailto:info@freibad-ampel.de">info@freibad-ampel.de</a>
+      <br />
     </div>
     <br /><br />
 
@@ -402,11 +793,11 @@
 
       const navLinks = [
         // id, rendered name, href
-        "home # Über uns # .",
+        'home # <i class="fa-solid fa-house"></i> # .',
         "faq # FAQ # .",
-        "play # Spielwiese # .",
-        'login # <i class="fa-solid fa-right-to-bracket"></i>&nbsp; Login # .',
-        'register # <i class="fa-solid fa-address-card"></i>&nbsp; Registrierung # .',
+        //"play # Spielwiese # .",
+        'mngt # <i class="fa-solid fa-address-card"></i>&nbsp; Verwaltung # .',
+        'editor # <i class="fa-solid fa-pen-to-square"></i>&nbsp; Editor # .',
         "about # Impressum # .",
         'github # <i class="fa-brands fa-github"></i> # https://github.com/andreas-schwenk/freibadampel',
       ];
@@ -453,7 +844,12 @@
       let code = `<iframe
   src="https://freibad-ampel.de/view.html?key=MEIN_SCHLUESSEL"
   scrolling="no"
-  style="display: block; aspect-ratio: 1 / 1; height: 100%; width: 100%; border-style: none;"
+  style="
+      display: block; 
+      aspect-ratio: 1 / 1; 
+      height: 100%; 
+      width: 100%; 
+      border-style: none;"
 >
 </iframe>`;
       while (code.includes("<")) code = code.replace("<", "&lt;");

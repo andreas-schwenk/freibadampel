@@ -3,9 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="author" content="Andreas Schwenk" />
-    <title>freibadampel.com</title>
-    <script src="ext/context-filter-polyfill/index.min.js"></script>
-    <script src="src/view.js?v=2"></script>
+    <title>freibad-ampel.de</title>
   </head>
   <body style="padding: 0px; margin: 0px">
     <img id="background-image" style="display: none" />
@@ -15,31 +13,7 @@
       height="512"
       style="width: 100%; margin: 0px; padding: 0px"
     ></canvas>
-    <script>
-      let canvas = document.getElementById("canvas");
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-      const pathData = "public/" + id + ".json";
-      const pathImg = "public/" + id + ".jpg";
-      if (urlParams.has("width")) {
-        let w = urlParams.get("width");
-        canvas.style.width = w;
-        canvas.style.height = w;
-      }
-      fetch(pathData)
-        .then((response) => response.json())
-        .then((data) => {
-          fetch(pathImg)
-            .then((response) => response.blob())
-            .then((imgData) => {
-              imgData = URL.createObjectURL(imgData);
-              let backgroundImage = document.getElementById("background-image");
-              backgroundImage.src = imgData;
-              backgroundImage.onload = function () {
-                renderView(canvas, data, backgroundImage);
-              };
-            });
-        });
-    </script>
+    <!-- TODO: need script to update version number!! -->
+    <script src="view.min.js?version=1691653710"></script>
   </body>
 </html>
