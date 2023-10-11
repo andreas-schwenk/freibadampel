@@ -329,18 +329,25 @@
             Öffnungszeiten-Editor.
           </p>
 
-          <div class="border border-3 border-black rounded p-2">
-            <p class="display-6">Anmelden / Registrieren</p>
+          <div class="text-center">
+            <button class="btn btn-danger btn-lg">
+              Noch kein Konto? Hier registrieren!
+            </button>
+          </div>
+          <br />
 
-            <p class="fst-italic px-5">
-              Tipp: Zum Ausprobieren kann als Username <b>demo</b> und als
-              Passwort ebenfalls <b>demo</b> verwendet werden.<br />
-              Hinweis: Im Demo-Modus werden keine Daten gespeichert!
-            </p>
+          <p class="fst-italic px-5 lead">
+            Tipp: Zum Ausprobieren kann als Username <b>demo</b> und als
+            Passwort ebenfalls <b>demo</b> verwendet werden.<br />
+            Hinweis: Im Demo-Modus werden keine Daten gespeichert!
+          </p>
+
+          <div class="border border-3 border-black rounded p-2">
+            <p class="display-6">Anmelden</p>
 
             <form id="register-form">
               <div class="form-group">
-                <label for="exampleInputEmail1"><b>Username</b></label>
+                <label for="exampleInputEmail1"><b>Mailadresse</b></label>
                 <input
                   type="email"
                   class="form-control"
@@ -387,10 +394,6 @@
               </button>
 
               <br /><br />
-
-              <button class="btn btn-danger">
-                Noch kein Konto? Hier registrieren!
-              </button>
             </form>
           </div>
 
@@ -403,12 +406,58 @@
             <p class="display-6">Registrierung</p>
 
             <form id="register-form">
+              <div class="dropdown">
+                <a
+                  class="btn btn-primary dropdown-toggle"
+                  href="#"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Land auswählen
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <li><a class="dropdown-item" href="#">Deutschland</a></li>
+                  <li><a class="dropdown-item" href="#">Österreich</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Schweiz</a>
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item" href="#">Belgien</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Liechtenstein</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Luxemburg</a>
+                  </li>
+                </ul>
+              </div>
+
               <br />
 
               <div class="form-group">
-                <label for="exampleInputEmail1"><b>Stadt / Kommune</b></label>
+                <label for="exampleInputEmail1"
+                  ><b>Stadt oder Kommune</b></label
+                >
                 <input
                   type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <div class="form-group">
+                <label for="exampleInputEmail1"><b>Postleitzahl</b></label>
+                <input
+                  type="text"
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
@@ -429,26 +478,8 @@
                   aria-describedby="emailHelp"
                   placeholder=""
                 />
-              </div>
-
-              <br />
-
-              <div class="form-group">
-                <label for="exampleInputEmail1">
-                  <b>
-                    Anzahl der Bäder, für die ein Öffnungszeiten-Panel erstellt
-                    werden soll
-                  </b>
-                </label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="1"
-                />
                 <small id="emailHelp" class="form-text text-muted">
-                  Kann später noch angepasst werden.
+                  Der Name des jeweiligen Bads wird später festgelegt.
                 </small>
               </div>
 
@@ -517,6 +548,14 @@
 
           <br />
 
+          <div class="p-2 text-center">
+            <button class="btn btn-primary btn-lg">
+              Allgemeine Einstellungen
+            </button>
+            <button class="btn btn-primary btn-lg">Bad 1</button>
+            <button class="btn btn-primary btn-lg">neues Bad</button>
+          </div>
+
           <div
             id="registration"
             class="border border-3 border-black rounded p-2"
@@ -527,64 +566,98 @@
             <button class="btn btn-primary">Ausloggen</button>
             <button class="btn btn-danger">Konto löschen</button>
 
-            <hr />
-
-            <b>Passwort ändern</b><br />
-
-            <div class="form-group">
-              <label for="exampleInputPassword1"><b>Altes Passwort</b></label>
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-                placeholder=""
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="exampleInputPassword1"><b>Neues Passwort</b></label>
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-                placeholder=""
-              />
-              <small id="emailHelp" class="form-text text-muted">
-                Mindestlänge: 12 Zeichen. Mindestens 1 Großbuchstabe. Mindestens
-                1 Sonderzeichen (z.B. <code>#</code> oder <code>:</code> oder
-                <code>?</code> oder <code>;</code>). Mindestens 1 Zahl.
-              </small>
-            </div>
-
-            <div class="form-group">
-              <label for="exampleInputPassword1"
-                ><b>Neues Passwort wiederholen</b></label
-              >
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-                placeholder=""
-              />
-            </div>
-
-            <br />
-
-            <button class="btn btn-primary">Passwort ändern</button>
-
             <br />
             <br />
 
-            <div
-              id="registration"
-              class="border border-5 border-dark p-2 shadow-lg bg-body"
-            >
-              <p class="display-6">Bad 1</p>
+            <div class="border border-2 border-dark p-2 shadow-sm">
+              <div class="display-6 mb-3">Passwort ändern</div>
 
               <div class="form-group">
-                <label for="exampleInputEmail1">
-                  <b>Name des Bads</b>
-                </label>
+                <label for="exampleInputPassword1"><b>Altes Passwort</b></label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder=""
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputPassword1"><b>Neues Passwort</b></label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder=""
+                />
+                <small id="emailHelp" class="form-text text-muted">
+                  Mindestlänge: 12 Zeichen. Mindestens 1 Großbuchstabe.
+                  Mindestens 1 Sonderzeichen (z.B. <code>#</code> oder
+                  <code>:</code> oder <code>?</code> oder <code>;</code>).
+                  Mindestens 1 Zahl.
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputPassword1"
+                  ><b>Neues Passwort wiederholen</b></label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <button class="btn btn-primary">Änderung speichern</button>
+            </div>
+
+            <br />
+
+            <div class="border border-2 border-dark p-2 shadow-sm">
+              <div class="display-6 mb-3">Mailadresse ändern</div>
+
+              <div class="form-group">
+                <label for="exampleInputPassword1"
+                  ><b>Neue Mailadresse</b></label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder=""
+                />
+              </div>
+
+              <br />
+
+              <button class="btn btn-primary">Änderung speichern</button>
+            </div>
+
+            <br />
+            <br />
+          </div>
+
+          <br />
+
+          <div
+            id="registration"
+            class="border border-3 border-black rounded p-2"
+          >
+            <p class="display-6">Einstellungen für: Bad 1</p>
+
+            <div class="text-center">
+              <button class="btn btn-danger">Bad löschen</button>
+            </div>
+
+            <br />
+
+            <div class="border border-2 border-dark p-2 shadow-sm">
+              <div class="display-6 mb-3">Badname</div>
+              <div class="form-group">
                 <input
                   type="text"
                   class="form-control"
@@ -597,13 +670,17 @@
                 </small>
               </div>
               <button class="btn btn-primary">Badnamen speichern</button>
-              <hr />
-              <button class="btn btn-primary">
-                Neues Hintergrundbild hochladen
-              </button>
-              <hr />
-              <b>Vorschau des Panels:</b>
+            </div>
+
+            <br />
+
+            <div class="border border-2 border-dark p-2 shadow-sm">
+              <div class="display-6 mb-3">Hintergrundbild</div>
+              <button class="btn btn-primary">neues Bild hochladen</button>
+
               <br />
+              <br />
+
               <div class="text-center">
                 <iframe
                   src="view.html?key=0000a5vw5iu2"
@@ -620,39 +697,20 @@
                 >
                 </iframe>
               </div>
-              <hr />
-              <b>Direktlink zum Panel:</b>
-              <br />
-              &nbsp;&nbsp;&nbsp;<a href="#" target="_blank"
-                >https://freibad-ampel.de/view.html?key=0000a5vw5iu2</a
-              >
-              <hr />
-              <b
-                >Beispielcode, mit dem das Panel auf Webseiten eingebunden
-                werden kann:
-              </b>
-              <div class="border border-3 border-dark bg-dark text-white">
-                <pre><code>
-  &lt;iframe
-    src="https://freibad-ampel.de/view.html?key=0000a5vw5iu2"
-    scrolling="no"
-    style="
-      display: block; 
-      aspect-ratio: 1 / 1; 
-      height: 100%; 
-      width: 100%; 
-      border-style: none; 
-      margin: 0 auto"
-  &gt;
-  &lt;/iframe&gt;
-</code></pre>
-              </div>
-              <hr />
-              <b
-                >Zugangsdaten zum Öffnungszeiten-Editor unter
-                <a href="#">https://freibad-ampel.de/editor/</a>:</b
-              ><br />
+            </div>
 
+            <br />
+
+            <div class="border border-2 border-dark p-2 shadow-sm">
+              <div class="display-6 mb-3">
+                Zugangsdaten zum Öffnungszeiten-Editor
+              </div>
+              <div class="text-center">
+                <a href="#" class="lead" target="_blank">
+                  https://freibad-ampel.de/editor/
+                </a>
+              </div>
+              <br />
               <table class="table table-dark">
                 <thead>
                   <tr>
@@ -669,18 +727,61 @@
                   </tr>
                 </tbody>
               </table>
-              <p class="text-danger px-5 lead">
+              <p class="text-dark px-5 lead">
                 Achtung: diese Zugangsdaten sollten nur dem Personal des Bades
                 "Freibad XYZ" ausgehändigt werden.
               </p>
               <button class="btn btn-primary">Passwort neu generieren</button>
               <button class="btn btn-primary">PIN neu generieren</button>
-              <hr />
-              <button class="btn btn-danger">Bad löschen</button>
             </div>
+
             <br />
-            <button class="btn btn-primary">Weiteres Bad anlegen</button>
+
+            <div class="border border-2 border-dark p-2 shadow-sm">
+              <div class="display-6 mb-3">Direktlink zum Panel</div>
+              &nbsp;&nbsp;&nbsp;<a href="#" class="lead" target="_blank"
+                >https://freibad-ampel.de/view.html?key=0000a5vw5iu2</a
+              >
+              <br /><br />
+              <button class="btn btn-primary">
+                Link in Zwischenablage kopieren
+              </button>
+            </div>
+
+            <br />
+
+            <div class="border border-2 border-dark p-2 shadow-sm">
+              <div class="display-6 mb-3">
+                Beispielcode zum Einbinden in Webseiten
+              </div>
+
+              <div class="border border-3 border-dark bg-dark text-white">
+                <pre><code>
+  &lt;iframe
+    src="https://freibad-ampel.de/view.html?key=0000a5vw5iu2"
+    scrolling="no"
+    style="
+      display: block; 
+      aspect-ratio: 1 / 1; 
+      height: 100%; 
+      width: 100%; 
+      border-style: none; 
+      margin: 0 auto"
+  &gt;
+  &lt;/iframe&gt;
+</code></pre>
+              </div>
+              <br />
+              <button class="btn btn-primary">
+                Code in Zwischenablage kopieren
+              </button>
+            </div>
           </div>
+          <!-- <div class="text-center">
+            <button class="btn btn-primary btn-lg my-3">
+              weiteres Bad anlegen
+            </button>
+          </div> -->
         </div>
       </div>
     </div>
