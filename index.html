@@ -85,11 +85,13 @@
 
   <body>
     <!-- ===== NAVBAR ===== -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <nav
+      class="container navbar fixed-top navbar-expand-lg navbar-dark bg-dark"
+    >
       <div class="container-fluid">
         <a class="navbar-brand p-0 m-0" href="#">
           &nbsp;
-          <img class="p-0 m-0" src="img/logo.svg?v=5" alt="" height="48px" />
+          <img class="p-0 m-0" src="img/logo-ai.png?v=1" alt="" height="48px" />
           &nbsp;
         </a>
         <button
@@ -118,9 +120,27 @@
         <i class="fa-solid fa-address-card"></i>&nbsp; Registrierung
       </button>-->
 
+      <br />
+
+      <p
+        style="
+          font-size: 24pt;
+          color: red;
+          font-weight: bold;
+          text-align: center;
+          background-color: rgba(255, 0, 0, 0.127);
+          padding: 12px;
+          margin: 0;
+        "
+      >
+        ACHTUNG! Diese Seite befindet sich momentan im Aufbau. Voraussichtlich
+        ist der Dienst ab 15. Juli 2024 verfügbar.
+      </p>
+      <br />
+
       <div class="text-center">
         <img
-          src="img/logo-large.svg?v=5"
+          src="img/logo-ai-large.jpg?v=1"
           class="img-fluid"
           style="max-height: 176px"
         />
@@ -129,7 +149,10 @@
 
         <div class="row">
           <div class="col">
-            <p class="lead">
+            <p
+              class="lead text-start"
+              style="font-weight: 500; line-height: 1.6"
+            >
               Bereits 2018 mahnte die DLRG die Schließung von ca. 80
               Schwimmbädern pro Jahr in Deutschland an. Immer weniger Kinder
               erwerben die Schwimmfähigkeit; die Zahl der Ertrinkungsunfälle
@@ -137,47 +160,68 @@
               mit einem immensen Sanierungsrückstau für die Bäder belastet. Für
               eine
               <b>Digitalisierung</b> fehlen meist die personellen und
-              finanziellen Kapazitäten.
+              finanziellen Mittel.
             </p>
-            <h3>
-              Dieses
-              <span style="text-decoration: underline"
-                >gemeinnützige Projekt</span
-              >
-              unterstützt die Bäder beim Hosten ihrer Öffnungszeiten.
+            <h3
+              style="
+                margin-top: 12pt;
+                margin-bottom: 12pt;
+                padding: 12pt;
+                border-style: solid;
+                border-color: black;
+                border-width: 2pt;
+              "
+            >
+              Dieses GEMEINNÜTZIGE Projekt unterstützt die Bäder beim Hosten
+              ihrer Öffnungszeiten.
               <!--Es fallen keine Kosten bei der Nutzung an.-->
+              <div class="lead fw-bold text-center" style="margin-top: 12px">
+                Eine Liste mit häufig gestellten Fragen und Antworten findet man
+                <a href="index.html?page=faq">hier</a>.
+              </div>
             </h3>
             <div class="text-start">
-              <ul>
+              <ul style="line-height: 2">
                 <li class="lead">
-                  Nach einer kostenfreien Registierung wird eine digitale
-                  Infotafel erzeugt, die bequem in bestehende Webseiten
-                  eingebunden werden kann.
+                  Nach einer kostenfreien Registrierung wird eine digitale
+                  Infotafel erzeugt. Diese kann bequem in bestehende Webseiten
+                  eingebunden werden.
                 </li>
                 <li class="lead">
-                  Die Bedienung erfolgt über eine Webapplikation (optimiert für
-                  Smartphones) und nimmt nur sehr wenig Zeit in Anspruch.
+                  Die Bedienung erfolgt über eine Webapplikation und nimmt nur
+                  sehr wenig Zeit in Anspruch. Die Darstellung wurde für
+                  Smartphones optimiert.
                 </li>
                 <li class="lead">
                   Pro Wochentag können individuelle Zeitslots als Standardzeiten
                   eingestellt werden. Abweichende (z.B. witterungsbedingte)
                   zeitliche Änderungen sind in wenigen Sekunden eingestellt.
-                  Optional kann u.a. die aktuelle Wassertemperatur eingestellt
+                  Optional kann u.a. die aktuelle Wassertemperatur eingetragen
                   werden.
                 </li>
                 <li class="lead">
-                  Es erfolgt KEINE Weitergabe der Daten an Dritte. Der alleinige
-                  Zweck dieses Projekts ist ein (kleiner) Beitrag zur Rettung
-                  der Freibäder!
+                  Es erfolgt KEINE Weitergabe der Daten an Dritte. Der
+                  Hauptzweck dieses Projekts besteht darin, einen (bescheidenen)
+                  Beitrag zur Rettung der Freibäder zu leisten!
                 </li>
               </ul>
             </div>
-            <p class="lead fw-bold">
-              Eine Liste häufig gestellter Fragen und Antworten findet man
-              <a href="index.html?page=faq">hier</a>.
-            </p>
-            <h2>Beispiel</h2>
-            <img src="blub.jpg?v=1" class="img-fluid" alt="Responsive image" />
+            <!--<h3 style="color: red">
+              RELEASE VORAUSSICHTLICH ZUM 1. AUGUST 2024
+            </h3>-->
+            <!--<h3 class="text-center text-dark">Beispiel</h3>-->
+            <img
+              src="blub.jpg?v=2"
+              class="img-fluid"
+              alt="Responsive image"
+              style="
+                border-style: solid;
+                border-width: 8px;
+                border-radius: 32px;
+                /*-webkit-box-shadow: 0px 0px 22px 5px rgba(0, 0, 0, 0.47);
+                box-shadow: 0px 0px 22px 5px rgba(0, 0, 0, 0.47);*/
+              "
+            />
           </div>
         </div>
       </div>
@@ -261,7 +305,7 @@
           <br />
 
           <h3>
-            Ist das Panel mit den Öffnungszeiten über
+            Sind die teilnehmenden Bäder auf der Seite
             <a href="https://freibad-ampel.de">https://freibad-ampel.de</a>
             zentral gelistet?
           </h3>
@@ -275,7 +319,7 @@
 
           <br />
 
-          <h3>
+          <!--<h3>
             Ist die Einrichtung mehrerer Personenaccounts pro Bad möglich?
           </h3>
           <p class="lead">TODO</p>
@@ -303,6 +347,8 @@
             einloggt, also nicht über die Startseite geht, ist der Datentransfer
             minimal. TODO: measure data / EDGE Verbindung??.
           </p>
+
+          -->
         </div>
       </div>
     </div>
@@ -860,18 +906,18 @@
     <br />
     <div
       id="footer"
-      class="container text-secondary bg-light p-4"
-      style="border-radius: 4px"
+      class="container text-light p-4"
+      style="border-radius: 0px; background-color: rgb(50, 50, 50)"
     >
-      <img src="img/logo.svg?v=5" height="48px" />
+      <img src="img/logo-ai.png?v=1" height="48px" />
       &nbsp;&nbsp;&nbsp;
-      <img src="img/gpl-v3-logo.svg" style="height: 48px" />
+      <img src="img/gpl-v3-logo-light.svg?v=1" style="height: 48px" />
       <br /><br />
       &copy; <span id="current-year"></span>
-      <a href="https://arts-and-sciences.com" class="text-secondary">
+      <a href="https://arts-and-sciences.com" style="color: white">
         Andreas Schwenk
       </a>
-      <br />
+      <br /><br />
       <i>
         Leidenschaftlicher Schwimmer /// Wissenschaftlicher Mitarbeiter ///
         Mitglied der Free Software Foundation (FSF)
@@ -879,7 +925,9 @@
       <br /><br />
       <i class="fa-regular fa-envelope"></i>
       Kontakt:
-      <a href="mailto:info@freibad-ampel.de">info@freibad-ampel.de</a>
+      <a href="mailto:info@freibad-ampel.de" style="color: white"
+        >info@freibad-ampel.de</a
+      >
       <br />
     </div>
     <br /><br />
@@ -897,8 +945,8 @@
         'home # <i class="fa-solid fa-house"></i> # .',
         "faq # FAQ # .",
         //"play # Spielwiese # .",
-        'mngt # <i class="fa-solid fa-address-card"></i>&nbsp; Verwaltung # .',
-        'editor # <i class="fa-solid fa-pen-to-square"></i>&nbsp; Editor # .',
+        //TODO: 'mngt # <i class="fa-solid fa-address-card"></i>&nbsp; Verwaltung # .',
+        //TODO: 'editor # <i class="fa-solid fa-pen-to-square"></i>&nbsp; Editor # .',
         "about # Impressum # .",
         'github # <i class="fa-brands fa-github"></i> # https://github.com/andreas-schwenk/freibadampel',
       ];

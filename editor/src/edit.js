@@ -75,7 +75,7 @@ function showStandardHours() {
     "Montags",
     "Dienstags",
     "Mittwochs",
-    "Donnerstangs",
+    "Donnerstags",
     "Freitags",
     "Samstags",
     "Sonntags",
